@@ -1,0 +1,48 @@
+{
+  "success": {
+    "default": "Operation successful",
+    "created": "Resource created successfully",
+    "updated": "Resource updated successfully",
+    "deleted": "Resource deleted successfully",
+    "retrieved": "Information retrieved successfully"
+  },
+
+  "errors": {
+    "internal": "Internal server error",
+    "validation": "The provided data is invalid",
+    "unauthorized": "Unauthorized",
+    "forbidden": "Access denied",
+    "not_found": "Resource not found",
+    "conflict": "Conflict with the current state of the resource",
+    "rate_limit": "Too many requests, please try again later",
+    "service_unavailable": "Service unavailable"
+  },
+
+  "auth": {
+    "login_success": "Login successful",
+    "logout_success": "Logged out successfully",
+    "invalid_credentials": "Invalid credentials",
+    "token_expired": "Token has expired",
+    "token_invalid": "Invalid token",
+    "account_blocked": "Account is blocked",
+    "account_not_verified": "Account is not verified"
+  },
+
+  "validation": {
+    "required": "Field is required",
+    "invalid_email": "Invalid email address",
+    "min_length": "Must contain at least {{min}} characters",
+    "max_length": "Must contain at most {{max}} characters",
+    "invalid_format": "Invalid format",
+    "not_found": "Value does not exist",
+    "already_exists": "Value already exists"
+  },
+
+  "common": {
+    "yes": "Yes",
+    "no": "No",
+    "enabled": "Enabled",
+    "disabled": "Disabled",
+    "unknown_error": "An unexpected error occurred"
+  }
+}

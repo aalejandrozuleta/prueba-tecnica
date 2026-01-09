@@ -1,0 +1,48 @@
+{
+  "success": {
+    "default": "Operación exitosa",
+    "created": "Recurso creado correctamente",
+    "updated": "Recurso actualizado correctamente",
+    "deleted": "Recurso eliminado correctamente",
+    "retrieved": "Información obtenida correctamente"
+  },
+
+  "errors": {
+    "internal": "Error interno del servidor",
+    "validation": "Los datos enviados no son válidos",
+    "unauthorized": "No autorizado",
+    "forbidden": "Acceso denegado",
+    "not_found": "Recurso no encontrado",
+    "conflict": "Conflicto con el estado actual del recurso",
+    "rate_limit": "Demasiadas solicitudes, intenta más tarde",
+    "service_unavailable": "Servicio no disponible"
+  },
+
+  "auth": {
+    "login_success": "Inicio de sesión exitoso",
+    "logout_success": "Sesión cerrada correctamente",
+    "invalid_credentials": "Credenciales inválidas",
+    "token_expired": "El token ha expirado",
+    "token_invalid": "Token inválido",
+    "account_blocked": "La cuenta está bloqueada",
+    "account_not_verified": "La cuenta no está verificada"
+  },
+
+  "validation": {
+    "required": "El campo es obligatorio",
+    "invalid_email": "El correo electrónico no es válido",
+    "min_length": "Debe contener al menos {{min}} caracteres",
+    "max_length": "Debe contener como máximo {{max}} caracteres",
+    "invalid_format": "Formato inválido",
+    "not_found": "El valor no existe",
+    "already_exists": "El valor ya existe"
+  },
+
+  "common": {
+    "yes": "Sí",
+    "no": "No",
+    "enabled": "Habilitado",
+    "disabled": "Deshabilitado",
+    "unknown_error": "Ocurrió un error inesperado"
+  }
+}
