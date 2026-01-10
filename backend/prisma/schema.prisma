@@ -6,12 +6,103 @@ datasource db {
   provider = "postgresql"
 }
 
+//////////////////////////////////////////////////////
+// ENUMS
+//////////////////////////////////////////////////////
+
+/**
+ * Estados posibles de una deuda
+ */
+enum DebtStatus {
+  PENDING
+  PAID
+}
+
+/**
+ * Roles básicos del sistema
+ */
+enum UserRole {
+  USER
+  ADMIN
+}
+
+//////////////////////////////////////////////////////
+// MODELOS
+//////////////////////////////////////////////////////
+
+/**
+ * Usuario del sistema
+ */
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id              String    @id @default(uuid())
+  email           String    @unique
+  password        String
+  name            String?
+
+  role            UserRole  @default(USER)
+  isActive        Boolean   @default(true)
+  emailVerified   Boolean   @default(false)
+
+  // Auditoría de acceso
+  lastLoginAt     DateTime?
+  lastLoginIp     String?
+  lastUserAgent   String?
+
+  // Auditoría general
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  deletedAt       DateTime?
+
+  // Relaciones
+  debtsAsDebtor   Debt[]    @relation("Debtor")
+  debtsAsCreditor Debt[]    @relation("Creditor")
 
   @@map("users")
+}
+
+/**
+ * Deudas entre usuarios
+ */
+model Debt {
+  id           String      @id @default(uuid())
+  amount       Decimal     @db.Decimal(10, 2)
+  description  String?
+
+  status       DebtStatus  @default(PENDING)
+
+  debtorId     String
+  creditorId   String
+
+  // Auditoría
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  paidAt       DateTime?
+
+  // Relaciones
+  debtor       User        @relation("Debtor", fields: [debtorId], references: [id])
+  creditor     User        @relation("Creditor", fields: [creditorId], references: [id])
+  payments     PaymentHistory[]
+
+  // Índices
+  @@index([debtorId])
+  @@index([creditorId])
+  @@index([status])
+
+  @@map("debts")
+}
+
+/**
+ * Historial de pagos (extensible a pagos parciales)
+ */
+model PaymentHistory {
+  id        String   @id @default(uuid())
+  debtId    String
+  amount    Decimal  @db.Decimal(10, 2)
+  paidAt    DateTime @default(now())
+
+  // Relación
+  debt      Debt     @relation(fields: [debtId], references: [id])
+
+  @@index([debtId])
+  @@map("payment_history")
 }
