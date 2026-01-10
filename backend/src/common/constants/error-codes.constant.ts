@@ -16,5 +16,4 @@ export const ERROR_CODES = {
   CREDITOR_NOT_FOUND: 'CREDITOR_NOT_FOUND',
 } as const;
 
-export type ErrorCode =
-  typeof ERROR_CODES[keyof typeof ERROR_CODES];
+export type ErrorCode = (typeof ERROR_CODES)[keyof typeof ERROR_CODES];

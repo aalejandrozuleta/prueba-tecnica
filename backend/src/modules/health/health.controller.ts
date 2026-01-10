@@ -1,17 +1,12 @@
 import { Controller, Get } from '@nestjs/common';
-import {
-  HealthCheck,
-  HealthCheckService,
-} from '@nestjs/terminus';
+import { HealthCheck, HealthCheckService } from '@nestjs/terminus';
 
 import { Headers } from '@nestjs/common';
 import { I18nContext } from 'nestjs-i18n';
 
 @Controller('health')
 export class HealthController {
-  constructor(
-    private readonly health: HealthCheckService,
-  ) { }
+  constructor(private readonly health: HealthCheckService) {}
 
   @Get('live')
   @HealthCheck()

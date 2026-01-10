@@ -3,10 +3,7 @@ import { I18nService } from 'nestjs-i18n';
 /**
  * Traduce mensajes i18nValidationMessage serializados.
  */
-export function translateValidationMessages(
-  rawMessages: string[],
-  i18n: I18nService,
-): string[] {
+export function translateValidationMessages(rawMessages: string[], i18n: I18nService): string[] {
   return rawMessages.map((raw) => {
     if (!raw.includes('|')) {
       return raw;

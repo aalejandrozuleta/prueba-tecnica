@@ -7,9 +7,7 @@ import { EnvVars } from './env.zod';
  */
 @Injectable()
 export class EnvService {
-  constructor(
-    private readonly config: ConfigService<EnvVars>,
-  ) {}
+  constructor(private readonly config: ConfigService<EnvVars>) {}
 
   get port(): number {
     return this.config.getOrThrow('PORT');
@@ -43,7 +41,7 @@ export class EnvService {
 
   // 🔐 REDIS
 
-   get redisHost(): string {
+  get redisHost(): string {
     return this.config.getOrThrow('REDIS_HOST');
   }
 

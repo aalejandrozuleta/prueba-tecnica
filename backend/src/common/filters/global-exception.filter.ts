@@ -7,11 +7,7 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 import { HttpAdapterHost } from '@nestjs/core';
-import {
-  I18nContext,
-  I18nService,
-  I18nValidationException,
-} from 'nestjs-i18n';
+import { I18nContext, I18nService, I18nValidationException } from 'nestjs-i18n';
 
 import { DomainException } from '@/domain/exceptions/DomainException';
 import { ERROR_CODES } from '../constants/error-codes.constant';
@@ -32,13 +28,8 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     const response = ctx.getResponse();
 
     const i18n = I18nContext.current();
-    const translate = (
-      key: string,
-      args?: Record<string, unknown>,
-    ) =>
-      i18n
-        ? i18n.translate(key, { args })
-        : this.i18nService.translate(key, { args });
+    const translate = (key: string, args?: Record<string, unknown>) =>
+      i18n ? i18n.translate(key, { args }) : this.i18nService.translate(key, { args });
 
     /**
      * 1️⃣ VALIDACIONES i18n (nestjs-i18n ValidationPipe)
@@ -46,10 +37,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     if (exception instanceof I18nValidationException) {
       const rawMessages = extractValidationMessages(exception.errors);
 
-      const details = translateValidationMessages(
-        rawMessages,
-        this.i18nService,
-      );
+      const details = translateValidationMessages(rawMessages, this.i18nService);
 
       httpAdapter.reply(
         response,
@@ -72,9 +60,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     if (exception instanceof BadRequestException) {
       const res = exception.getResponse() as any;
 
-      const details = Array.isArray(res?.message)
-        ? res.message
-        : undefined;
+      const details = Array.isArray(res?.message) ? res.message : undefined;
 
       httpAdapter.reply(
         response,
@@ -95,10 +81,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
      * 3️⃣ ERRORES DE DOMINIO (DomainException + i18n)
      */
     if (exception instanceof DomainException) {
-      const message = translate(
-        exception.i18nKey,
-        exception.i18nArgs,
-      );
+      const message = translate(exception.i18nKey, exception.i18nArgs);
 
       httpAdapter.reply(
         response,
@@ -128,9 +111,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
           success: false,
           error: {
             code: res?.code ?? ERROR_CODES.INTERNAL_ERROR,
-            message:
-              res?.message ??
-              translate(ERROR_CODES.INTERNAL_ERROR),
+            message: res?.message ?? translate(ERROR_CODES.INTERNAL_ERROR),
             details: res?.details,
           },
         },

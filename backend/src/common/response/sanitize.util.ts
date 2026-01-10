@@ -5,13 +5,9 @@ import { SENSITIVE_FIELDS } from '../constants/sensitive-fields.constant';
  *
  * @template T Tipo del objeto
  */
-export function sanitize<T extends object>(
-  data: T | T[],
-): T | T[] {
+export function sanitize<T extends object>(data: T | T[]): T | T[] {
   if (Array.isArray(data)) {
-    return data.map((item) =>
-      isObject(item) ? deepSanitize(item) : item,
-    ) as T[];
+    return data.map((item) => (isObject(item) ? deepSanitize(item) : item)) as T[];
   }
 
   return deepSanitize(data);
@@ -26,9 +22,7 @@ function deepSanitize<T extends object>(obj: T): T {
     }
 
     if (Array.isArray(value)) {
-      result[key] = value.map((item) =>
-        isObject(item) ? deepSanitize(item) : item,
-      );
+      result[key] = value.map((item) => (isObject(item) ? deepSanitize(item) : item));
     } else if (isObject(value)) {
       result[key] = deepSanitize(value);
     } else {

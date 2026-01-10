@@ -4,12 +4,11 @@ import { DebtRepository } from '@auth/domain/repositories/Debt.repository';
 import { Debt } from '@auth/domain/entities/Debt.entity';
 import { mapToDomain } from './mappers/debt.mapper';
 
-
 @Injectable()
 export class PrismaDebtRepository implements DebtRepository {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
-   /**
+  /**
    * Obtiene todas las deudas de un deudor
    */
   async findByDebtorId(debtorId: string): Promise<boolean> {
@@ -21,7 +20,7 @@ export class PrismaDebtRepository implements DebtRepository {
   }
 
   /**
-   * 
+   *
    * @param creditorId ID del acreedor
    * @returns true si existe al menos una deuda con ese acreedor
    */
@@ -51,7 +50,6 @@ export class PrismaDebtRepository implements DebtRepository {
    */
   async create(debt: Debt): Promise<Debt> {
     console.log('description', debt.getDescription());
-    
 
     const record = await this.prisma.debt.create({
       data: {

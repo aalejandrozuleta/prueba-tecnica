@@ -21,10 +21,7 @@ async function bootstrap(): Promise<void> {
   app.use(passport.initialize());
 
   if (env.nodeEnv !== 'production') {
-    const document = SwaggerModule.createDocument(
-      app,
-      swaggerConfig,
-    );
+    const document = SwaggerModule.createDocument(app, swaggerConfig);
 
     SwaggerModule.setup('docs', app, document, {
       swaggerOptions: {

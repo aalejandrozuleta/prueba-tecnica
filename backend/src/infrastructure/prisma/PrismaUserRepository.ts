@@ -6,11 +6,9 @@ import { Email } from '@auth/domain/value-objects/Email.vo';
 import { User } from '@auth/domain/entities/User.entity';
 import { mapToDomain } from './mappers/user.mapper';
 
-
-
 @Injectable()
 export class PrismaUserRepository implements UserRepository {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   /**
    * Busca un usuario por email

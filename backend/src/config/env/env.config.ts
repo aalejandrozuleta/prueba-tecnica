@@ -9,10 +9,7 @@ export const validateEnv = (config: Record<string, unknown>) => {
 
   if (!parsed.success) {
     const message = parsed.error.issues
-      .map(
-        (issue) =>
-          `- ${issue.path.join('.')}: ${issue.message}`,
-      )
+      .map((issue) => `- ${issue.path.join('.')}: ${issue.message}`)
       .join('\n');
 
     throw new Error(`❌ Invalid environment variables:\n${message}`);

@@ -9,10 +9,7 @@ export function mapToDomain(record: PrismaDebt): Debt {
     debtorId: record.debtorId,
     creditorId: record.creditorId,
     amount: new Money(record.amount.toNumber()),
-    status:
-      record.status === 'PAID'
-        ? DebtStatus.paid()
-        : DebtStatus.pending(),
+    status: record.status === 'PAID' ? DebtStatus.paid() : DebtStatus.pending(),
     createdAt: record.createdAt,
     paidAt: record.paidAt,
   });

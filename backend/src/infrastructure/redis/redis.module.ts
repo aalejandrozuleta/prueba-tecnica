@@ -8,9 +8,7 @@ import { EnvModule } from '@auth/config/env/env.module';
  */
 @Global()
 @Module({
-  imports: [
-    EnvModule,
-  ],
+  imports: [EnvModule],
   providers: [
     {
       provide: Redis,
@@ -26,4 +24,4 @@ import { EnvModule } from '@auth/config/env/env.module';
   ],
   exports: [Redis],
 })
-export class RedisModule { }
+export class RedisModule {}

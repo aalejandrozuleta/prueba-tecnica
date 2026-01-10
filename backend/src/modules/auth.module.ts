@@ -17,7 +17,7 @@ import { JwtConfigModule } from '@auth/infrastructure/auth/jwt.module';
 import { EnvModule } from '@auth/config/env/env.module';
 
 @Module({
-  imports: [RedisModule,JwtConfigModule,EnvModule],
+  imports: [RedisModule, JwtConfigModule, EnvModule],
   controllers: [AuthController],
   providers: [
     // Use case

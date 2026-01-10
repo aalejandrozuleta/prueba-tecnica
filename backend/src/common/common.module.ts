@@ -5,7 +5,6 @@ import { EnvModule } from '@/config/env/env.module';
   imports: [
     EnvModule, // 🔑 NECESARIO
   ],
-  providers: [
-  ],
+  providers: [],
 })
 export class CommonModule {}

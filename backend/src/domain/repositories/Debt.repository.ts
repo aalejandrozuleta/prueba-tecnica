@@ -1,4 +1,4 @@
-import { Debt } from "../entities/Debt.entity";
+import { Debt } from '../entities/Debt.entity';
 
 export interface DebtRepository {
   findByDebtorId(debtorId: string): Promise<boolean>;

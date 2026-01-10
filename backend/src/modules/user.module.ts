@@ -6,7 +6,6 @@ import { ArgonPasswordHasher } from '@auth/infrastructure/crypto/PasswordHasher.
 import { PrismaUserRepository } from '@auth/infrastructure/prisma/PrismaUserRepository';
 import { Module } from '@nestjs/common';
 
-
 /**
  * Módulo de usuarios
  */
@@ -26,4 +25,3 @@ import { Module } from '@nestjs/common';
   ],
 })
 export class UserModule {}
-

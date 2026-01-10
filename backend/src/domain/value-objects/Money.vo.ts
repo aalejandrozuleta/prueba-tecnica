@@ -1,4 +1,4 @@
-import { ExceptionFactory } from "../exceptions/ExceptionFactory";
+import { ExceptionFactory } from '../exceptions/ExceptionFactory';
 
 /**
  * Value Object que representa una cantidad monetaria válida

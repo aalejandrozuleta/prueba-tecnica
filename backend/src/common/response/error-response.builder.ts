@@ -12,13 +12,11 @@ export interface ErrorResponse {
 /**
  * Construye una respuesta de error estándar.
  */
-export function buildErrorResponse(
-  params: {
-    message: string;
-    code: ErrorCode;
-    details?: unknown;
-  },
-): ErrorResponse {
+export function buildErrorResponse(params: {
+  message: string;
+  code: ErrorCode;
+  details?: unknown;
+}): ErrorResponse {
   return {
     message: params.message,
     code: params.code,

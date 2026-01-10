@@ -1,11 +1,9 @@
-import { LoginAttemptRepository } from "@auth/application/ports/LoginAttemptRepository.port";
-import { Injectable } from "@nestjs/common";
-import Redis from "ioredis";
+import { LoginAttemptRepository } from '@auth/application/ports/LoginAttemptRepository.port';
+import { Injectable } from '@nestjs/common';
+import Redis from 'ioredis';
 
 @Injectable()
-export class LoginAttemptRedisAdapter
-  implements LoginAttemptRepository {
-
+export class LoginAttemptRedisAdapter implements LoginAttemptRepository {
   private static readonly FAIL_TTL_SECONDS = 15 * 60; // 15 min
 
   constructor(private readonly redis: Redis) {}
@@ -29,10 +27,7 @@ export class LoginAttemptRedisAdapter
 
     // Si es el primer intento, seteamos TTL
     if (attempts === 1) {
-      await this.redis.expire(
-        key,
-        LoginAttemptRedisAdapter.FAIL_TTL_SECONDS,
-      );
+      await this.redis.expire(key, LoginAttemptRedisAdapter.FAIL_TTL_SECONDS);
     }
 
     return attempts;
@@ -42,16 +37,7 @@ export class LoginAttemptRedisAdapter
     await this.redis.del(this.failKey(email, ip));
   }
 
-  async block(
-    email: string,
-    ip: string,
-    ttlSeconds: number,
-  ): Promise<void> {
-    await this.redis.set(
-      this.blockKey(email, ip),
-      '1',
-      'EX',
-      ttlSeconds,
-    );
+  async block(email: string, ip: string, ttlSeconds: number): Promise<void> {
+    await this.redis.set(this.blockKey(email, ip), '1', 'EX', ttlSeconds);
   }
 }

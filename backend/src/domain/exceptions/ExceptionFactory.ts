@@ -5,7 +5,6 @@ import { DomainException } from './DomainException';
  * Factory centralizada para excepciones del dominio
  */
 export class ExceptionFactory {
-
   /* =========================
    * AUTH / USER
    * ========================= */
@@ -82,8 +81,8 @@ export class ExceptionFactory {
   }
 
   /**
-  * El deudor superó el límite de deudas activas
-  */
+   * El deudor superó el límite de deudas activas
+   */
   static activeDebtLimitExceeded(max: number): DomainException {
     return new DomainException({
       code: ERROR_CODES.DEBT_ACTIVE_LIMIT_EXCEEDED,
@@ -116,5 +115,4 @@ export class ExceptionFactory {
       i18nArgs: { creditorId },
     });
   }
-
 }

@@ -3,9 +3,7 @@ import { ValidationError } from 'class-validator';
 /**
  * Extrae mensajes de validación de forma recursiva.
  */
-export function extractValidationMessages(
-  errors: ValidationError[],
-): string[] {
+export function extractValidationMessages(errors: ValidationError[]): string[] {
   const messages: string[] = [];
 
   for (const error of errors) {
@@ -14,9 +12,7 @@ export function extractValidationMessages(
     }
 
     if (error.children?.length) {
-      messages.push(
-        ...extractValidationMessages(error.children),
-      );
+      messages.push(...extractValidationMessages(error.children));
     }
   }
 

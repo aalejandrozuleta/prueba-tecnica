@@ -6,7 +6,6 @@ import { DEBT_REPOSITORY } from '@auth/application/tokens/debt-repository.token'
 import { Money } from '@auth/domain/value-objects/Money.vo';
 import { ExceptionFactory } from '@auth/domain/exceptions/ExceptionFactory';
 
-
 /**
  * Caso de uso: crear deuda
  */
@@ -15,12 +14,11 @@ export class CreateDebtUseCase {
   constructor(
     @Inject(DEBT_REPOSITORY)
     private readonly debtRepository: DebtRepository,
-
   ) { }
 
   async execute(dto: CreateDebtDto): Promise<Debt> {
     console.log('dto', dto);
-    
+
     const existDebtor = await this.debtRepository.findByDebtorId(dto.debtorId);
     if (!existDebtor) {
       throw ExceptionFactory.debtorNotFound(dto.debtorId);
@@ -35,19 +33,17 @@ export class CreateDebtUseCase {
      * Regla de negocio:
      * un deudor no puede tener más de 3 deudas activas
      */
-    const activeDebts =
-      await this.debtRepository.countActiveByDebtor(dto.debtorId);
+    const activeDebts = await this.debtRepository.countActiveByDebtor(dto.debtorId);
 
     if (activeDebts >= 10) {
       throw ExceptionFactory.activeDebtLimitExceeded(10);
     }
 
     /**
-    * Construcción del Value Object
-    * (protege la invariante del monto)
-    */
+     * Construcción del Value Object
+     * (protege la invariante del monto)
+     */
     const amount = new Money(dto.amount);
-
 
     /**
      * Creación de la entidad de dominio

@@ -1,6 +1,6 @@
-import { Email } from "../value-objects/Email.vo";
-import { HashedPassword } from "../value-objects/HashedPassword.vo";
-import { UserId } from "../value-objects/UserId.vo";
+import { Email } from '../value-objects/Email.vo';
+import { HashedPassword } from '../value-objects/HashedPassword.vo';
+import { UserId } from '../value-objects/UserId.vo';
 
 export class User {
   constructor(
@@ -8,12 +8,11 @@ export class User {
     private name: string,
     private email: Email,
     private password: HashedPassword,
-  ) { }
+  ) {}
 
   getId(): string {
-  return this.id.getValue();
-}
-
+    return this.id.getValue();
+  }
 
   getEmail(): string {
     return this.email.getValue();
@@ -27,17 +26,7 @@ export class User {
     return this.password.getValue();
   }
 
-  static create(props: {
-    name: string;
-    email: Email;
-    password: HashedPassword;
-  }): User {
-    return new User(
-      UserId.create(),
-      props.name,
-      props.email,
-      props.password
-    );
+  static create(props: { name: string; email: Email; password: HashedPassword }): User {
+    return new User(UserId.create(), props.name, props.email, props.password);
   }
-
 }

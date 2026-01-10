@@ -1,17 +1,16 @@
-import { AuthSessionService } from "@auth/application/ports/AuthSessionService.port";
-import { PrismaService } from "@auth/infrastructure/prisma/config/prisma.service";
-import { Injectable } from "@nestjs/common";
-import { JwtService } from "@nestjs/jwt";
-import * as argon2 from "argon2";
-import { randomUUID } from "crypto";
-import { EnvService } from "@/config/env/env.service";
+import { AuthSessionService } from '@auth/application/ports/AuthSessionService.port';
+import { PrismaService } from '@auth/infrastructure/prisma/config/prisma.service';
+import { Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import * as argon2 from 'argon2';
+import { randomUUID } from 'crypto';
+import { EnvService } from '@/config/env/env.service';
 
 /**
  * Implementación del servicio de sesiones y tokens de autenticación
  */
 @Injectable()
 export class AuthSessionServiceImpl implements AuthSessionService {
-
   constructor(
     private readonly prisma: PrismaService,
     private readonly jwtService: JwtService,
@@ -29,9 +28,8 @@ export class AuthSessionServiceImpl implements AuthSessionService {
       deviceId: string;
       ip: string;
       userAgent: string;
-    }
+    },
   ): Promise<{ accessToken: string; refreshToken: string }> {
-
     const payload = {
       sub: userId,
       email,
@@ -47,17 +45,15 @@ export class AuthSessionServiceImpl implements AuthSessionService {
     const hashedRefreshToken = await argon2.hash(refreshToken);
 
     const expiresAt = new Date();
-    expiresAt.setDate(
-      expiresAt.getDate() + this.env.jwtRefreshExpiresInDays
-    );
+    expiresAt.setDate(expiresAt.getDate() + this.env.jwtRefreshExpiresInDays);
 
     await this.prisma.authSession.create({
       data: {
         userId,
         refreshToken: hashedRefreshToken,
-        deviceId: meta?.deviceId ?? "unknown",
-        ip: meta?.ip ?? "unknown",
-        userAgent: meta?.userAgent ?? "unknown",
+        deviceId: meta?.deviceId ?? 'unknown',
+        ip: meta?.ip ?? 'unknown',
+        userAgent: meta?.userAgent ?? 'unknown',
         expiresAt,
       },
     });
@@ -72,7 +68,6 @@ export class AuthSessionServiceImpl implements AuthSessionService {
    * Genera un nuevo access token usando un refresh token válido
    */
   async refresh(refreshToken: string): Promise<string> {
-
     const sessions = await this.prisma.authSession.findMany({
       where: {
         revokedAt: null,
@@ -81,10 +76,7 @@ export class AuthSessionServiceImpl implements AuthSessionService {
     });
 
     for (const session of sessions) {
-      const valid = await argon2.verify(
-        session.refreshToken,
-        refreshToken,
-      );
+      const valid = await argon2.verify(session.refreshToken, refreshToken);
 
       if (!valid) continue;
 
@@ -104,7 +96,7 @@ export class AuthSessionServiceImpl implements AuthSessionService {
       return accessToken;
     }
 
-    throw new Error("Refresh token inválido o expirado");
+    throw new Error('Refresh token inválido o expirado');
   }
 
   /**

@@ -27,7 +27,7 @@ export class CreateUserUseCase {
 
     const exists = await this.userRepository.findByEmail(email);
     if (exists) {
-        throw ExceptionFactory.emailAlreadyExists(dto.email);
+      throw ExceptionFactory.emailAlreadyExists(dto.email);
     }
 
     const hash = await this.passwordHasher.hash(dto.password);

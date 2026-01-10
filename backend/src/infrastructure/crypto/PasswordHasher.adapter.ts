@@ -4,7 +4,6 @@ import { PasswordHasher } from '@auth/application/ports/PasswordHasher.port';
 
 @Injectable()
 export class ArgonPasswordHasher implements PasswordHasher {
-
   async hash(plain: string): Promise<string> {
     try {
       return await argon2.hash(plain, {

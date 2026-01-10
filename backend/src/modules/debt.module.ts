@@ -4,7 +4,6 @@ import { DebtController } from '@auth/infrastructure/controllers/Debt.controller
 import { PrismaDebtRepository } from '@auth/infrastructure/prisma/PrismaDebtRepository';
 import { Module } from '@nestjs/common';
 
-
 /**
  * Módulo de usuarios
  */
@@ -20,4 +19,3 @@ import { Module } from '@nestjs/common';
   ],
 })
 export class DebtModule {}
-

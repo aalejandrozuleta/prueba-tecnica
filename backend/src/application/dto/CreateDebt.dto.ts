@@ -27,10 +27,7 @@ export class CreateDebtDto {
    * - Decimal(10,2) en base de datos
    * - Debe ser un número positivo
    */
-  @IsNumber(
-    { maxDecimalPlaces: 2 },
-    { message: i18nValidationMessage('debt.invalid.amount') },
-  )
+  @IsNumber({ maxDecimalPlaces: 2 }, { message: i18nValidationMessage('debt.invalid.amount') })
   @IsPositive({ message: i18nValidationMessage('debt.positive.amount') })
   @IsNotEmpty({ message: i18nValidationMessage('debt.required.amount') })
   amount!: number;
