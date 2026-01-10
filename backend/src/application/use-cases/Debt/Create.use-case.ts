@@ -38,8 +38,8 @@ export class CreateDebtUseCase {
     const activeDebts =
       await this.debtRepository.countActiveByDebtor(dto.debtorId);
 
-    if (activeDebts >= 3) {
-      throw ExceptionFactory.activeDebtLimitExceeded(3);
+    if (activeDebts >= 10) {
+      throw ExceptionFactory.activeDebtLimitExceeded(10);
     }
 
     /**
