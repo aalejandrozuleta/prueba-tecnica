@@ -6,6 +6,7 @@ import { DebtController } from '@auth/infrastructure/controllers/Debt.controller
 import { PrismaDebtRepository } from '@auth/infrastructure/prisma/PrismaDebtRepository';
 import { GetDebtUseCase } from '@auth/application/use-cases/Debt/GetDebt.use-case';
 import { UpdateDebtUseCase } from '@auth/application/use-cases/Debt/UpdateDebt.use-case';
+import { DeleteDebtUseCase } from '@auth/application/use-cases/Debt/DeleteDebt.use-case';
 
 /**
  * Módulo de usuarios
@@ -16,6 +17,7 @@ import { UpdateDebtUseCase } from '@auth/application/use-cases/Debt/UpdateDebt.u
     CreateDebtUseCase,
     GetDebtUseCase,
     UpdateDebtUseCase,
+    DeleteDebtUseCase,
 
     {
       provide: DEBT_REPOSITORY,

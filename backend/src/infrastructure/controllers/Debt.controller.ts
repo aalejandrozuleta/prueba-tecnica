@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post, Put, UseGuards } from '@nestjs/common';
 
 import { CreateDebtDto } from '@auth/application/dto/CreateDebt.dto';
 import { CreateDebtUseCase } from '@auth/application/use-cases/Debt/Create.use-case';
@@ -8,6 +8,8 @@ import { AuthUser } from '../auth/types/auth-user.type';
 import { CurrentUser } from '../auth/decorators/current-user.decorator';
 import { UpdateDebtUseCase } from '@auth/application/use-cases/Debt/UpdateDebt.use-case';
 import { UpdateDebtDto } from '@auth/application/dto/UpdateDebt.dto';
+import { DeleteDebtUseCase } from '@auth/application/use-cases/Debt/DeleteDebt.use-case';
+import { DeleteDebtDto } from '@auth/application/dto/DeleteDebt.dto';
 
 
 @Controller('debt')
@@ -17,6 +19,7 @@ export class DebtController {
     private readonly createDebtUseCase: CreateDebtUseCase,
     private readonly getDebtUseCase: GetDebtUseCase,
     private readonly updateDebtUseCase: UpdateDebtUseCase,
+    private readonly deleteDebtUseCase: DeleteDebtUseCase,
   ) { }
 
   @Post('create')
@@ -38,5 +41,10 @@ export class DebtController {
   @Put()
   async updateDebt(@Body() dto: UpdateDebtDto) {
     return this.updateDebtUseCase.execute(dto);
+  }
+
+  @Delete()
+  async deleteDebt(@Body() dto: DeleteDebtDto) {
+    return this.deleteDebtUseCase.execute(dto.id);
   }
 }

@@ -7,4 +7,5 @@ export interface DebtRepository {
   countActiveByDebtor(debtorId: string): Promise<number>;
   findDebtsByUserId(userId: string): Promise<Debt[]>;
   findById(id: string): Promise<Debt | null>;
+  delete(debt: Debt): Promise<void>;
 }

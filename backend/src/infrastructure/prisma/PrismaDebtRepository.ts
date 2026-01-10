@@ -110,4 +110,13 @@ export class PrismaDebtRepository implements DebtRepository {
     return mapToDomain(record);
   }
 
+  /**
+   * Borra una deuda
+   */
+
+  async delete(debt: Debt): Promise<void> {
+    await this.prisma.debt.delete({
+      where: { id: debt.getId() },
+    });
+  }
 }
