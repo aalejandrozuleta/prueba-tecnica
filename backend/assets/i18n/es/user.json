@@ -1,0 +1,25 @@
+{
+  "errors": {
+    "invalid_email": "Dirección de correo electrónico no válida",
+    "password": "La contraseña debe contener al menos 8 caracteres"
+  },
+  "required": {
+    "email": "Correo electrónico es obligatorio",
+    "password": "Contraseña es obligatoria",
+    "name": "Nombre es obligatorio"
+  },
+  "validateGeneral": {
+    "required": "Campo es obligatorio",
+    "passwordMin": "La contraseña debe contener al menos 8 caracteres",
+    "passwordMax": "La contraseña debe contener al menos 50 caracteres",
+    "passwordUpper": "La contraseña debe contener al menos una letra mayúscula",
+    "passwordLower": "La contraseña debe contener al menos una letra minúscula",
+    "passwordNumber": "La contraseña debe contener al menos un número",
+    "passwordSpecial": "La contraseña debe contener al menos un carácter especial",
+    "nameMin": "El nombre debe contener al menos 2 caracteres",
+    "nameMax": "El nombre debe contener al menos 50 caracteres",
+    "emailInvalid": "Dirección de correo electrónico no válida",
+    "passwordInvalid": "La contraseña no es valida",
+    "USER_EMAIL_ALREADY_EXISTS": "El email ya existe"
+  }
+}

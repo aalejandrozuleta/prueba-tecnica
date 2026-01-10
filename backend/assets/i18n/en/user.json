@@ -1,0 +1,27 @@
+{
+  "errors": {
+    "invalid_email": "Invalid email address",
+    "password": "Password must contain at least 8 characters"
+  },
+
+  "required": {
+    "email": "Email is required",
+    "password": "Password is required",
+    "name": "Name is required"
+  },
+
+  "validateGeneral": {
+    "required": "Field is required",
+    "passwordMin": "Password must contain at least 8 characters",
+    "passwordMax": "Password must contain at most 50 characters",
+    "passwordUpper": "Password must contain at least one uppercase letter",
+    "passwordLower": "Password must contain at least one lowercase letter",
+    "passwordNumber": "Password must contain at least one number",
+    "passwordSpecial": "Password must contain at least one special character",
+    "nameMin": "Name must contain at least 2 characters",
+    "nameMax": "Name must contain at most 50 characters",
+    "emailInvalid": "Invalid email address",
+    "passwordInvalid": "Password is invalid",
+    "USER_EMAIL_ALREADY_EXISTS": "Email already exists"
+  }
+}

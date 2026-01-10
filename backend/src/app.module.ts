@@ -1,11 +1,9 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 import {
   AcceptLanguageResolver,
-  HeaderResolver,
   I18nJsonLoader,
   I18nModule,
-  QueryResolver,
 } from 'nestjs-i18n';
 import path from 'path';
 
@@ -14,6 +12,9 @@ import { EnvService } from '@/config/env/env.service';
 import { HealthModule } from './modules/health/health.module';
 import { PrismaModule } from './infrastructure/prisma/config/prisma.module';
 import { CommonModule } from './common/common.module';
+import { APP_FILTER } from '@nestjs/core';
+import { GlobalExceptionFilter } from './common/filters/global-exception.filter';
+import { UserModule } from './modules/user.module';
 
 @Module({
   imports: [
@@ -30,29 +31,29 @@ import { CommonModule } from './common/common.module';
     }),
 
     // 2️⃣ I18n usando envs correctamente
-    I18nModule.forRootAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: (config: ConfigService) => ({
-        fallbackLanguage: 'es',
-        loader: I18nJsonLoader,
-        loaderOptions: {
-          path: path.join(process.cwd(), 'dist/assets/i18n'),
-          watch: config.get('NODE_ENV') !== 'production',
-        },
-        resolvers: [
-          { use: QueryResolver, options: ['lang'] },
-          { use: HeaderResolver, options: ['x-lang', 'accept-language'] },
-          { use: AcceptLanguageResolver },
-        ],
-      }),
+        I18nModule.forRoot({
+      fallbackLanguage: 'es',
+      loader: I18nJsonLoader,
+      loaderOptions: {
+        path: path.join(process.cwd(), 'assets/i18n'),
+        watch: true,
+      },
+      resolvers: [
+        AcceptLanguageResolver,
+      ],
     }),
 
     CommonModule,
     HealthModule,
     PrismaModule,
+    UserModule,
   ],
-  providers: [EnvService],
+  providers: [EnvService,
+    {
+      provide: APP_FILTER,
+      useClass: GlobalExceptionFilter,
+    }
+  ],
   exports: [EnvService],
 })
 export class AppModule { }

@@ -1,17 +1,15 @@
 import { NestFactory } from '@nestjs/core';
-import { ValidationPipe, VersioningType } from '@nestjs/common';
+import { BadRequestException, ValidationError, ValidationPipe, VersioningType } from '@nestjs/common';
 import passport from 'passport';
-import { I18nValidationExceptionFilter } from 'nestjs-i18n';
 import { AppModule } from './app.module';
 import { EnvService } from '@/config/env/env.service';
-import { SuccessResponseInterceptor } from '@auth/common/interceptors/success-response.interceptor';
-import { ErrorResponseInterceptor } from './common/interceptors/error-response.interceptor';
 import { SwaggerModule } from '@nestjs/swagger';
 import { swaggerConfig } from '@/config/swagger/swagger.config';
 import { requestContextMiddleware } from './common/context/request-context.middleware';
-import { GlobalExceptionFilter } from './common/filters/global-exception.filter';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
+import { I18nService, I18nValidationPipe } from 'nestjs-i18n';
+
 
 
 /**
@@ -23,20 +21,6 @@ async function bootstrap(): Promise<void> {
   const env = app.get(EnvService);
 
   app.use(passport.initialize());
-
-  app.useGlobalPipes(
-    new ValidationPipe({
-      transform: true,
-      whitelist: true,
-      forbidNonWhitelisted: true,
-      stopAtFirstError: true,
-    }),
-  );
-
-  app.useGlobalFilters(
-    new I18nValidationExceptionFilter(),
-    new GlobalExceptionFilter(),
-  );
 
   if (env.nodeEnv !== 'production') {
     const document = SwaggerModule.createDocument(
@@ -55,8 +39,15 @@ async function bootstrap(): Promise<void> {
     type: VersioningType.URI,
   });
 
-  app.use(requestContextMiddleware);
-
+  // app.use(requestContextMiddleware);
+  app.useGlobalPipes(
+    new I18nValidationPipe({
+      transform: true,
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      stopAtFirstError: false,
+    }),
+  );
   app.enableCors({
     origin: env.corsOrigin,
     credentials: true,
@@ -74,6 +65,7 @@ async function bootstrap(): Promise<void> {
   );
 
   await app.listen(env.port);
+  console.log('Aplicación corriendo', env.port);
 }
 
 bootstrap();
