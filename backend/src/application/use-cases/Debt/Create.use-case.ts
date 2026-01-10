@@ -57,7 +57,7 @@ export class CreateDebtUseCase {
     /**
      * Persistencia
      */
-    await this.debtRepository.create(debt);
+    await this.debtRepository.save(debt);
 
     return debt;
   }

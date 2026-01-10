@@ -4,7 +4,8 @@ import { DEBT_REPOSITORY } from '@auth/application/tokens/debt-repository.token'
 import { CreateDebtUseCase } from '@auth/application/use-cases/Debt/Create.use-case';
 import { DebtController } from '@auth/infrastructure/controllers/Debt.controller';
 import { PrismaDebtRepository } from '@auth/infrastructure/prisma/PrismaDebtRepository';
-import { GetDebtUseCase } from '@auth/application/use-cases/Debt/GetDeb.use-case';
+import { GetDebtUseCase } from '@auth/application/use-cases/Debt/GetDebt.use-case';
+import { UpdateDebtUseCase } from '@auth/application/use-cases/Debt/UpdateDebt.use-case';
 
 /**
  * Módulo de usuarios
@@ -14,6 +15,7 @@ import { GetDebtUseCase } from '@auth/application/use-cases/Debt/GetDeb.use-case
   providers: [
     CreateDebtUseCase,
     GetDebtUseCase,
+    UpdateDebtUseCase,
 
     {
       provide: DEBT_REPOSITORY,
@@ -21,4 +23,4 @@ import { GetDebtUseCase } from '@auth/application/use-cases/Debt/GetDeb.use-case
     },
   ],
 })
-export class DebtModule {}
+export class DebtModule { }

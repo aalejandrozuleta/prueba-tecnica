@@ -50,22 +50,44 @@ export class PrismaDebtRepository implements DebtRepository {
   /**
    * Crea una nueva deuda
    */
-  async create(debt: Debt): Promise<Debt> {
-    const record = await this.prisma.debt.create({
-      data: {
-        id: debt.getId(),
-        amount: debt.getAmount(),
-        description: debt.getDescription(),
-        status: debt.getStatus(),
-        debtorId: debt.getDebtorId(),
-        creditorId: debt.getCreditorId(),
-        createdAt: debt.getCreatedAt(),
-        paidAt: debt.getPaidAt(),
-      },
+  /**
+   * Guarda una deuda:
+   * - Crea si no existe
+   * - Actualiza si ya existe
+   */
+  async save(debt: Debt): Promise<Debt> {
+    const exists = await this.prisma.debt.findUnique({
+      where: { id: debt.getId() },
+      select: { id: true },
     });
+
+    const record = exists
+      ? await this.prisma.debt.update({
+        where: { id: debt.getId() },
+        data: {
+          amount: debt.getAmount(),
+          description: debt.getDescription(),
+          status: debt.getStatus(),
+          paidAt: debt.getPaidAt(),
+          updatedAt: new Date(),
+        },
+      })
+      : await this.prisma.debt.create({
+        data: {
+          id: debt.getId(),
+          amount: debt.getAmount(),
+          description: debt.getDescription(),
+          status: debt.getStatus(),
+          debtorId: debt.getDebtorId(),
+          creditorId: debt.getCreditorId(),
+          createdAt: debt.getCreatedAt(),
+          paidAt: debt.getPaidAt(),
+        },
+      });
 
     return mapToDomain(record);
   }
+
 
   async findDebtsByUserId(userId: string): Promise<Debt[]> {
     const records = await this.prisma.debt.findMany({
@@ -74,6 +96,18 @@ export class PrismaDebtRepository implements DebtRepository {
     });
 
     return records.map(mapToDomain);
+  }
+
+  async findById(id: string): Promise<Debt | null> {
+    const record = await this.prisma.debt.findUnique({
+      where: { id },
+    });
+
+    if (!record) {
+      return null;
+    }
+
+    return mapToDomain(record);
   }
 
 }

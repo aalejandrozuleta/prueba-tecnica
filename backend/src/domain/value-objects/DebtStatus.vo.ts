@@ -1,6 +1,3 @@
-/**
- * Value Object que representa el estado de una deuda
- */
 export class DebtStatus {
   private constructor(private readonly value: 'PENDING' | 'PAID') {}
 
@@ -10,6 +7,17 @@ export class DebtStatus {
 
   static paid(): DebtStatus {
     return new DebtStatus('PAID');
+  }
+
+  static from(value: 'PENDING' | 'PAID'): DebtStatus {
+    switch (value) {
+      case 'PENDING':
+        return DebtStatus.pending();
+      case 'PAID':
+        return DebtStatus.paid();
+      default:
+        throw new Error('Invalid debt status');
+    }
   }
 
   isPaid(): boolean {
