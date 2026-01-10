@@ -127,7 +127,7 @@ export function RegisterForm() {
       success(texts.submit);
       router.push('/auth');
     } catch (err:any) {
-      error(err.message);
+      error(err.error.message);
     } finally {
       setLoading(false);
     }

@@ -49,5 +49,9 @@
     "enabled": "Enabled",
     "disabled": "Disabled",
     "unknown_error": "An unexpected error occurred"
+  },
+
+  "user": {
+    "user.email_already_exists": "Email already exists"
   }
 }

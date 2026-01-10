@@ -60,7 +60,7 @@ export class ExceptionFactory {
     return new DomainException({
       code: ERROR_CODES.USER_EMAIL_ALREADY_EXISTS,
       status: 409,
-      i18nKey: 'common.user.email_already_exists',
+      i18nKey: 'common.errors.user_email_already_exists',
       i18nArgs: { email },
     });
   }

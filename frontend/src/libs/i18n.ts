@@ -45,6 +45,16 @@ export const translations = {
       /** Fallback */
       unknown: 'Ocurrió un error inesperado',
     },
+    auth: {
+      title: 'Iniciar sesión',
+      subtitle: 'Accede a tu cuenta',
+      email: 'Correo electrónico',
+      password: 'Contraseña',
+      submit: 'Ingresar',
+      loading: 'Ingresando...',
+      registerLink: '¿No tienes cuenta? Regístrate',
+    },
+
   },
 
   en: {
@@ -79,6 +89,17 @@ export const translations = {
       /** Fallback */
       unknown: 'An unexpected error occurred',
     },
+
+    auth: {
+      title: 'Sign in',
+      subtitle: 'Access your account',
+      email: 'Email address',
+      password: 'Password',
+      submit: 'Sign in',
+      loading: 'Signing in...',
+      registerLink: 'Don’t have an account? Sign up',
+    },
+
   },
 } as const;
 
@@ -98,4 +119,11 @@ export function getRegisterTexts(lang: Language) {
  */
 export function getErrorTexts(lang: Language) {
   return translations[lang].errors;
+}
+
+/**
+ * Textos de autenticación.
+ */
+export function getAuthTexts(lang: Language) {
+  return translations[lang].auth;
 }
