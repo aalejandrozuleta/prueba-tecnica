@@ -1,0 +1,360 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: prueba tecnica
+meta:
+  id: wrk_f8a9686c5d9340688aaaa970e5267c7e
+  created: 1767993686371
+  modified: 1767993686371
+  description: ""
+collection:
+  - name: request
+    meta:
+      id: fld_74d1a17c0666438daa6884784b54ee1e
+      created: 1768062793362
+      modified: 1768062813119
+      sortKey: -1768062793362
+      description: ""
+    children:
+      - url: "{{ _.baseUrl }}/docs"
+        name: docs swagger
+        meta:
+          id: req_b7e5b7f49e7b46dbb41920ae239152ad
+          created: 1768074686403
+          modified: 1768077476756
+          isPrivate: false
+          description: ""
+          sortKey: -1768074686403
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.2.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - name: User
+        meta:
+          id: fld_652366309d97447ba7b33bacacbc4dba
+          created: 1768024459707
+          modified: 1768062810716
+          sortKey: -1768062807164
+          description: ""
+        children:
+          - url: "{{ _.baseUrl }}/user/register"
+            name: "Register "
+            meta:
+              id: req_1efdf0aaf744460591370d6a1a1c9c36
+              created: 1768015389420
+              modified: 1768063607019
+              isPrivate: false
+              description: ""
+              sortKey: -1768024463140
+            method: POST
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"name":"carlos",
+                	"email":"carlos1@gmail.com",
+                	"password":"Alejandro_9312"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/12.2.0
+                description: ""
+                disabled: false
+              - name: Accept-Language
+                value: en
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: "{{ _.baseUrl }}/auth/login"
+            name: auth
+            meta:
+              id: req_0291e3916f46453ea8e0c3bb00b16157
+              created: 1768024465513
+              modified: 1768072179339
+              isPrivate: false
+              description: ""
+              sortKey: -1768024465513
+            method: POST
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"email":"alejandro@gmail.com",
+                	"password":"Alejandro_9312"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/12.2.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+      - name: Debt
+        meta:
+          id: fld_d37e847dddf844d79a5389e7defa9b1c
+          created: 1768056896650
+          modified: 1768062807098
+          sortKey: -1768062807064
+          description: ""
+        children:
+          - url: "{{ _.baseUrl }}/debt/create"
+            name: Create
+            meta:
+              id: req_2ed75e4082a94d9eab76aed462bd55d9
+              created: 1768056899977
+              modified: 1768077947119
+              isPrivate: false
+              description: ""
+              sortKey: -1768056899977
+            method: POST
+            body:
+              mimeType: application/json
+              text: |+
+                {
+                	"amount": 1000,
+                	"description": "Préstamo para gastos compartidos prueba",
+                	"creditorId": "e83aaa04-ae76-4c36-9115-b05e2a680f31"
+                }
+
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/12.2.0
+                description: ""
+                disabled: false
+              - name: Accept-Language
+                value: en
+                description: ""
+                disabled: true
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: "{{ _.baseUrl }}/debt"
+            name: getDebsUser
+            meta:
+              id: req_1429ccd502dc49cc9d60d3132ac58c54
+              created: 1768060200689
+              modified: 1768062937130
+              isPrivate: false
+              description: ""
+              sortKey: -1768060200689
+            method: GET
+            headers:
+              - name: User-Agent
+                value: insomnia/12.2.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: "{{ _.baseUrl }}/debt"
+            name: update
+            meta:
+              id: req_dbf5960554394cf3bcb15380061fdf8c
+              created: 1768066418860
+              modified: 1768070472796
+              isPrivate: false
+              description: ""
+              sortKey: -1768066418860
+            method: PUT
+            body:
+              mimeType: application/json
+              text: >
+                {
+                  "id": "d2a42e99-6607-4459-9ffa-b5d49789d232",
+                  "amount": 1500.75,
+                  "description": "Actualización del monto por ajuste de factura",
+                  "status": "PENDING"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/12.2.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: "{{ _.baseUrl }}/debt"
+            name: delete
+            meta:
+              id: req_dca78d233d264c258fb7efa1b519b91a
+              created: 1768067236950
+              modified: 1768070054933
+              isPrivate: false
+              description: ""
+              sortKey: -1768067236950
+            method: DELETE
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"id": "e1d6b194-f1e2-4ea9-afec-567d30c4bcac"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/12.2.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: "{{ _.baseUrl }}/debt/pay"
+            name: Pay
+            meta:
+              id: req_0736bf2cc342450a950aff249242e699
+              created: 1768070030995
+              modified: 1768070459524
+              isPrivate: false
+              description: ""
+              sortKey: -1768070030995
+            method: POST
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"id": "d2a42e99-6607-4459-9ffa-b5d49789d232"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/12.2.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: "{{ _.baseUrl }}/debt/count"
+            name: countDebt
+            meta:
+              id: req_5cd9f3d3354f4c44bcea8c67c7e0cd41
+              created: 1768078862229
+              modified: 1768078912220
+              isPrivate: false
+              description: ""
+              sortKey: -1768078862229
+            method: GET
+            headers:
+              - name: User-Agent
+                value: insomnia/12.2.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: "{{ _.baseUrl }}/debt/export"
+            name: csv
+            meta:
+              id: req_33975d3696a644d8b69b520ac930aec1
+              created: 1768079376821
+              modified: 1768079392879
+              isPrivate: false
+              description: ""
+              sortKey: -1768079376821
+            method: GET
+            headers:
+              - name: User-Agent
+                value: insomnia/12.2.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_942185d65ec8b3fe4d49df277ead72477dc9ec8a
+    created: 1767993686394
+    modified: 1768078894380
+  cookies:
+    - id: dd1af0d6-4144-4159-9fe6-ec7f218ca9ae
+      key: access_token
+      value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQxNTc5MWZjLWMwZjgtNGFmNC04NDkyLTllZDRjZDZkYTA0OCIsImVtYWlsIjoiYWxlamFuZHJvQGdtYWlsLmNvbSIsIm5hbWUiOiJhbGVqYW5kcm8iLCJzZXNzaW9uSWQiOiI3NDg4NzEwZi03ZjEzLTQzNDctOTQ0Ny1mZjhlZDViZWFhMDciLCJpYXQiOjE3NjgwNzg4OTQsImV4cCI6MTc2ODA3OTc5NH0.hMGr9536NcJO7-1sXTfRFKbLeNqbSbTonVpeUj_4uek
+      domain: localhost
+      path: /
+      secure: false
+      httpOnly: true
+      hostOnly: true
+    - id: 88c3a5ae-5644-4924-837e-8a1afb33d863
+      key: refresh_token
+      value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZXNzaW9uSWQiOiI3NDg4NzEwZi03ZjEzLTQzNDctOTQ0Ny1mZjhlZDViZWFhMDciLCJpYXQiOjE3NjgwNzg4OTQsImV4cCI6MTc2ODY4MzY5NH0.zv7Rs_3FbVVFvdEAnK115KKfL_moLIGcYa-ycGbA6Yw
+      domain: localhost
+      path: /
+      secure: false
+      httpOnly: true
+      hostOnly: true
+environments:
+  name: Base Environment
+  meta:
+    id: env_942185d65ec8b3fe4d49df277ead72477dc9ec8a
+    created: 1767993686379
+    modified: 1768015644936
+    isPrivate: false
+  data:
+    baseUrl: http://localhost:3000

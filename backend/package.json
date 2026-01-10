@@ -2,26 +2,31 @@
   "name": "backend",
   "version": "0.0.1",
   "description": "",
-  "author": "",
+  "author": "Alejandro Zuleta",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
     "build": "nest build",
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
+
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-        "test": "jest",
+
+    "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "docs:api": "echo 'Swagger disponible en /docs'",
+
     "docs": "typedoc src --entryPointStrategy expand",
-    "db:seed": "ts-node scripts/seed.ts",
-    "db:reset": "ts-node scripts/reset.ts",
+
+    "seed": "ts-node prisma/seed.ts",
+    "clean": "ts-node prisma/seed-clean.ts",
+    "create-env-files": "ts-node scripts/create-env-files.ts",
+
     "docker:up": "docker compose -f ./docker-compose.dev.yml up",
     "docker:down": "docker-compose -f ./docker-compose.dev.yml down",
     "docker:build": "docker-compose -f ./docker-compose.dev.yml build",
@@ -29,6 +34,7 @@
     "docker:exec": "docker-compose exec backend",
     "docker:stop": "docker-compose stop",
     "docker:rm": "docker-compose rm -f",
+
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate deploy",
     "prisma:studio": "prisma studio",
