@@ -1,0 +1,26 @@
+FROM node:24-alpine
+
+# Directorio de trabajo
+WORKDIR /app
+
+# Habilitar pnpm
+RUN corepack enable && corepack prepare pnpm@latest --activate
+
+# Copiar archivos de dependencias
+COPY package.json pnpm-lock.yaml ./
+
+# Instalar dependencias (incluye devDependencies)
+RUN pnpm install
+
+# Copiar el resto del código
+COPY . .
+
+# Generar esquemas de base de datos
+RUN pnpm prisma generate
+
+
+# Exponer puerto de la app
+EXPOSE 8000
+
+# Comando de desarrollo con hot reload
+CMD ["pnpm", "run", "start:dev"]

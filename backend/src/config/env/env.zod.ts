@@ -20,8 +20,6 @@ export const envSchema = z.object({
   JWT_EXPIRES_IN: z.string().optional(),
   ACCESS_EXPIRES_IN: z.string().default('15m'),
   REFRESH_EXPIRES_DAYS: z.coerce.number().default(7),
-
-  TURNSTILE_SECRET_KEY: z.string(),
 });
 
 export type EnvVars = z.infer<typeof envSchema>;

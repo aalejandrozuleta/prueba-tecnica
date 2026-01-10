@@ -11,6 +11,9 @@ import path from 'path';
 
 import { validateEnv } from '@/config/env/env.config';
 import { EnvService } from '@/config/env/env.service';
+import { HealthModule } from './modules/health/health.module';
+import { PrismaModule } from './infrastructure/prisma/config/prisma.module';
+import { CommonModule } from './common/common.module';
 
 @Module({
   imports: [
@@ -34,22 +37,22 @@ import { EnvService } from '@/config/env/env.service';
         fallbackLanguage: 'es',
         loader: I18nJsonLoader,
         loaderOptions: {
-          path: path.join(process.cwd(), 'assets/i18n/'),
-          watch:
-            config.get<string>('NODE_ENV') !== 'production',
+          path: path.join(process.cwd(), 'dist/assets/i18n'),
+          watch: config.get('NODE_ENV') !== 'production',
         },
         resolvers: [
           { use: QueryResolver, options: ['lang'] },
-          new HeaderResolver([
-            'x-lang',
-            'accept-language',
-          ]),
-          AcceptLanguageResolver,
+          { use: HeaderResolver, options: ['x-lang', 'accept-language'] },
+          { use: AcceptLanguageResolver },
         ],
       }),
     }),
+
+    CommonModule,
+    HealthModule,
+    PrismaModule,
   ],
   providers: [EnvService],
   exports: [EnvService],
 })
-export class AppModule {}
+export class AppModule { }

@@ -1,0 +1,16 @@
+# Dockerfile.test
+FROM node:24-alpine
+
+WORKDIR /app
+
+RUN corepack enable && corepack prepare pnpm@latest --activate
+
+COPY package.json pnpm-lock.yaml ./
+
+# Instalar dependencias (incluye devDependencies)
+RUN pnpm install
+
+COPY . .
+
+# Ejecutar tests
+CMD ["pnpm", "run", "test"]
