@@ -20,42 +20,44 @@ export class RequestContextService {
   /**
    * Ejecuta una función dentro de un nuevo contexto de solicitud.
    *
-   * @param context - Objeto con los datos del contexto a establecer.
-   * @param callback - Función que se ejecutará dentro de ese contexto.
-   * @returns El valor retornado por el callback.
+   * @param context Datos del contexto
+   * @param callback Función a ejecutar
+   * @returns Resultado del callback
    */
   static run<T>(context: RequestContextData, callback: (...args: unknown[]) => T): T {
     return storage.run(context, callback);
   }
 
   /**
-   * Obtiene un valor del contexto actual usando la clave proporcionada.
+   * Obtiene un valor del contexto actual.
    *
-   * @param key - La clave del valor a obtener del contexto.
-   * @returns El valor asociado a la clave, o `undefined` si no existe.
+   * @param key Clave del valor a obtener
+   * @returns Valor asociado o `undefined`
    */
   static get<T extends keyof RequestContextData>(key: T): RequestContextData[T] | undefined {
+    // eslint-disable-next-line security/detect-object-injection
     return storage.getStore()?.[key];
   }
 
   /**
-   * Obtiene el valor del idioma actual del contexto.
+   * Obtiene el idioma actual del contexto.
    *
-   * @returns El idioma actual, o 'es' si no se ha definido.
+   * @returns Código de idioma
    */
   static getLang(): string {
-    return this.get('lang') ?? 'es'; // Valor por defecto
+    return this.get('lang') ?? 'es';
   }
 
   /**
    * Establece un valor en el contexto actual.
    *
-   * @param key - Clave del dato a establecer.
-   * @param value - Valor a establecer.
+   * @param key Clave del dato
+   * @param value Valor a establecer
    */
   static set<T extends keyof RequestContextData>(key: T, value: RequestContextData[T]): void {
     const store = storage.getStore();
     if (store) {
+      // eslint-disable-next-line security/detect-object-injection
       store[key] = value;
     }
   }
@@ -63,7 +65,7 @@ export class RequestContextService {
   /**
    * Establece el idioma actual en el contexto.
    *
-   * @param lang - Código de idioma (por ejemplo, 'es', 'en').
+   * @param lang Código de idioma
    */
   static setLang(lang: string): void {
     this.set('lang', lang);

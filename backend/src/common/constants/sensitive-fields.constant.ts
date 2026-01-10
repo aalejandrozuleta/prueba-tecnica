@@ -9,3 +9,5 @@ export const SENSITIVE_FIELDS = [
   'recoveryCode',
   'internalId',
 ] as const;
+
+export type SensitiveField = (typeof SENSITIVE_FIELDS)[number];

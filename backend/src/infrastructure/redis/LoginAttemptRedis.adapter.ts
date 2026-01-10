@@ -1,6 +1,7 @@
-import { LoginAttemptRepository } from '@auth/application/ports/LoginAttemptRepository.port';
 import { Injectable } from '@nestjs/common';
 import Redis from 'ioredis';
+
+import { LoginAttemptRepository } from '@auth/application/ports/LoginAttemptRepository.port';
 
 @Injectable()
 export class LoginAttemptRedisAdapter implements LoginAttemptRepository {

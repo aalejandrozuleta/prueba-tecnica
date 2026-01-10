@@ -1,6 +1,7 @@
+import { Body, Controller, Post } from '@nestjs/common';
+
 import { CreateDebtDto } from '@auth/application/dto/CreateDebt.dto';
 import { CreateDebtUseCase } from '@auth/application/use-cases/Debt/Create.use-case';
-import { Body, Controller, Post } from '@nestjs/common';
 
 @Controller('debt')
 export class DebtController {

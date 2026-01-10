@@ -1,9 +1,12 @@
-import { AuthSessionService } from '@auth/application/ports/AuthSessionService.port';
-import { PrismaService } from '@auth/infrastructure/prisma/config/prisma.service';
+import { randomUUID } from 'crypto';
+
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as argon2 from 'argon2';
-import { randomUUID } from 'crypto';
+
+import { AuthSessionService } from '@auth/application/ports/AuthSessionService.port';
+import { PrismaService } from '@auth/infrastructure/prisma/config/prisma.service';
+
 import { EnvService } from '@/config/env/env.service';
 
 /**
@@ -78,7 +81,9 @@ export class AuthSessionServiceImpl implements AuthSessionService {
     for (const session of sessions) {
       const valid = await argon2.verify(session.refreshToken, refreshToken);
 
-      if (!valid) continue;
+      if (!valid) {
+        continue;
+      }
 
       const accessToken = await this.jwtService.signAsync(
         { sub: session.userId },

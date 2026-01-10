@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+
 import { EnvVars } from './env.zod';
 
 /**
@@ -28,7 +29,7 @@ export class EnvService {
   }
 
   get jwtAccessExpiresIn(): `${number}${'s' | 'm' | 'h' | 'd'}` {
-    return this.config.getOrThrow('JWT_ACCESS_EXPIRES_IN') as `${number}${'s' | 'm' | 'h' | 'd'}`;
+    return this.config.getOrThrow('JWT_ACCESS_EXPIRES_IN');
   }
 
   get jwtRefreshSecret(): string {

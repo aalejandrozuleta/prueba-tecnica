@@ -11,7 +11,7 @@ export function extractValidationMessages(errors: ValidationError[]): string[] {
       messages.push(...Object.values(error.constraints));
     }
 
-    if (error.children?.length) {
+    if (error.children && error.children.length > 0) {
       messages.push(...extractValidationMessages(error.children));
     }
   }

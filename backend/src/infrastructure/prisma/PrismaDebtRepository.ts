@@ -1,7 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from './config/prisma.service';
-import { DebtRepository } from '@auth/domain/repositories/Debt.repository';
+
 import { Debt } from '@auth/domain/entities/Debt.entity';
+import { DebtRepository } from '@auth/domain/repositories/Debt.repository';
+
+import { PrismaService } from './config/prisma.service';
 import { mapToDomain } from './mappers/debt.mapper';
 
 @Injectable()
@@ -49,8 +51,6 @@ export class PrismaDebtRepository implements DebtRepository {
    * Crea una nueva deuda
    */
   async create(debt: Debt): Promise<Debt> {
-    console.log('description', debt.getDescription());
-
     const record = await this.prisma.debt.create({
       data: {
         id: debt.getId(),

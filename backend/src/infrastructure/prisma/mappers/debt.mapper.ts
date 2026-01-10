@@ -1,7 +1,8 @@
-import { Debt } from '@auth/domain/entities/Debt.entity';
-import { Money } from '@auth/domain/value-objects/Money.vo';
-import { DebtStatus } from '@auth/domain/value-objects/DebtStatus.vo';
 import { Debt as PrismaDebt } from '@prisma/client';
+
+import { Debt } from '@auth/domain/entities/Debt.entity';
+import { DebtStatus } from '@auth/domain/value-objects/DebtStatus.vo';
+import { Money } from '@auth/domain/value-objects/Money.vo';
 
 export function mapToDomain(record: PrismaDebt): Debt {
   return Debt.restore({

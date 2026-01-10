@@ -1,12 +1,4 @@
-import {
-  IsEmail,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-  Matches,
-  MaxLength,
-  MinLength,
-} from 'class-validator';
+import { IsEmail, IsNotEmpty, Matches } from 'class-validator';
 import { i18nValidationMessage } from 'nestjs-i18n';
 
 export class LoginUserDto {

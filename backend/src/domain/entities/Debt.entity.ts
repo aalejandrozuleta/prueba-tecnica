@@ -1,6 +1,6 @@
-import { Money } from '../value-objects/Money.vo';
-import { DebtStatus } from '../value-objects/DebtStatus.vo';
 import { ExceptionFactory } from '../exceptions/ExceptionFactory';
+import { DebtStatus } from '../value-objects/DebtStatus.vo';
+import { Money } from '../value-objects/Money.vo';
 
 /**
  * Entidad de dominio que representa una deuda

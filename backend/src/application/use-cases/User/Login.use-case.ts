@@ -1,3 +1,5 @@
+import { Inject, Injectable } from '@nestjs/common';
+
 import { LoginUserDto } from '@auth/application/dto/LoginUser.dto';
 import { AuthSessionService } from '@auth/application/ports/AuthSessionService.port';
 import { LoginAttemptRepository } from '@auth/application/ports/LoginAttemptRepository.port';
@@ -9,7 +11,6 @@ import { USER_REPOSITORY } from '@auth/application/tokens/user-repository.token'
 import { ExceptionFactory } from '@auth/domain/exceptions/ExceptionFactory';
 import { UserRepository } from '@auth/domain/repositories/User.repository';
 import { Email } from '@auth/domain/value-objects/Email.vo';
-import { Inject, Injectable } from '@nestjs/common';
 
 @Injectable()
 export class LoginUserUseCase {

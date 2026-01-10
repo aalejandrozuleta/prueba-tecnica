@@ -1,7 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
-import { HealthCheck, HealthCheckService } from '@nestjs/terminus';
-
 import { Headers } from '@nestjs/common';
+import { HealthCheck, HealthCheckService } from '@nestjs/terminus';
 import { I18nContext } from 'nestjs-i18n';
 
 @Controller('health')

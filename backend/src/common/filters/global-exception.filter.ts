@@ -1,3 +1,8 @@
+/* eslint-disable
+  @typescript-eslint/no-explicit-any,
+  @typescript-eslint/no-unsafe-assignment,
+  @typescript-eslint/no-unsafe-member-access
+*/
 import {
   ExceptionFilter,
   Catch,
@@ -10,6 +15,7 @@ import { HttpAdapterHost } from '@nestjs/core';
 import { I18nContext, I18nService, I18nValidationException } from 'nestjs-i18n';
 
 import { DomainException } from '@/domain/exceptions/DomainException';
+
 import { ERROR_CODES } from '../constants/error-codes.constant';
 import { ERROR_HTTP_STATUS } from '../constants/error-status.map';
 import { extractValidationMessages } from '../utils/extract-validation-messages.util';

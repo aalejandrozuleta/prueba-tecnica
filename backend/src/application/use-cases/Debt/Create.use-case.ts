@@ -1,10 +1,11 @@
-import { Inject, Injectable, ConflictException } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
+
 import { CreateDebtDto } from '@auth/application/dto/CreateDebt.dto';
-import { Debt } from '@auth/domain/entities/Debt.entity';
-import { DebtRepository } from '@auth/domain/repositories/Debt.repository';
 import { DEBT_REPOSITORY } from '@auth/application/tokens/debt-repository.token';
-import { Money } from '@auth/domain/value-objects/Money.vo';
+import { Debt } from '@auth/domain/entities/Debt.entity';
 import { ExceptionFactory } from '@auth/domain/exceptions/ExceptionFactory';
+import { DebtRepository } from '@auth/domain/repositories/Debt.repository';
+import { Money } from '@auth/domain/value-objects/Money.vo';
 
 /**
  * Caso de uso: crear deuda
@@ -14,11 +15,9 @@ export class CreateDebtUseCase {
   constructor(
     @Inject(DEBT_REPOSITORY)
     private readonly debtRepository: DebtRepository,
-  ) { }
+  ) {}
 
   async execute(dto: CreateDebtDto): Promise<Debt> {
-    console.log('dto', dto);
-
     const existDebtor = await this.debtRepository.findByDebtorId(dto.debtorId);
     if (!existDebtor) {
       throw ExceptionFactory.debtorNotFound(dto.debtorId);

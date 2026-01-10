@@ -1,18 +1,20 @@
+import path from 'path';
+
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { APP_FILTER } from '@nestjs/core';
 import { AcceptLanguageResolver, I18nJsonLoader, I18nModule } from 'nestjs-i18n';
-import path from 'path';
 
 import { validateEnv } from '@/config/env/env.config';
 import { EnvService } from '@/config/env/env.service';
-import { HealthModule } from './modules/health/health.module';
-import { PrismaModule } from './infrastructure/prisma/config/prisma.module';
+
 import { CommonModule } from './common/common.module';
-import { APP_FILTER } from '@nestjs/core';
 import { GlobalExceptionFilter } from './common/filters/global-exception.filter';
-import { UserModule } from './modules/user.module';
+import { PrismaModule } from './infrastructure/prisma/config/prisma.module';
 import { AuthModule } from './modules/auth.module';
 import { DebtModule } from './modules/debt.module';
+import { HealthModule } from './modules/health/health.module';
+import { UserModule } from './modules/user.module';
 
 @Module({
   imports: [

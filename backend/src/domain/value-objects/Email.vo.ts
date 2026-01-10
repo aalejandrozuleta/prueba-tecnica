@@ -1,4 +1,5 @@
 import { ERROR_CODES } from '@auth/common/constants/error-codes.constant';
+
 import { DomainException } from '../exceptions/DomainException';
 
 /**

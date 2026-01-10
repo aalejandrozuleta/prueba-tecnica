@@ -1,7 +1,9 @@
 import { Global, Module } from '@nestjs/common';
 import Redis from 'ioredis';
-import { EnvService } from '@/config/env/env.service';
+
 import { EnvModule } from '@auth/config/env/env.module';
+
+import { EnvService } from '@/config/env/env.service';
 
 /**
  * Módulo global de Redis

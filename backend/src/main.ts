@@ -1,14 +1,16 @@
-import { NestFactory } from '@nestjs/core';
 import { VersioningType } from '@nestjs/common';
-import passport from 'passport';
-import { AppModule } from './app.module';
-import { EnvService } from '@/config/env/env.service';
+import { NestFactory } from '@nestjs/core';
 import { SwaggerModule } from '@nestjs/swagger';
-import { swaggerConfig } from '@/config/swagger/swagger.config';
-import helmet from 'helmet';
-import rateLimit from 'express-rate-limit';
-import { I18nValidationPipe } from 'nestjs-i18n';
 import cookieParser from 'cookie-parser';
+import rateLimit from 'express-rate-limit';
+import helmet from 'helmet';
+import { I18nValidationPipe } from 'nestjs-i18n';
+import passport from 'passport';
+
+import { EnvService } from '@/config/env/env.service';
+import { swaggerConfig } from '@/config/swagger/swagger.config';
+
+import { AppModule } from './app.module';
 
 /**
  * Bootstrap de la aplicación.
@@ -62,7 +64,9 @@ async function bootstrap(): Promise<void> {
   app.use(cookieParser());
 
   await app.listen(env.port);
-  console.log('Aplicación corriendo', env.port);
+  console.info('Aplicación corriendo', env.port);
 }
-
-bootstrap();
+bootstrap().catch((error) => {
+  console.error('Error al iniciar la aplicación', error);
+  process.exit(1);
+});

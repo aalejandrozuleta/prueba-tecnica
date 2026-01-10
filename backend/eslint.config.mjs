@@ -44,6 +44,15 @@ export default [
       security,
       import: importPlugin,
     },
+
+    settings: {
+      'import/resolver': {
+        typescript: {
+          project: './tsconfig.json',
+        },
+      },
+    },
+
     rules: {
       'import/no-unresolved': 'error',
       'import/no-cycle': 'warn',

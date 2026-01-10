@@ -1,6 +1,7 @@
+import { Body, Controller, Post } from '@nestjs/common';
+
 import { CreateUserDto } from '@auth/application/dto/CreateUser.dto';
 import { CreateUserUseCase } from '@auth/application/use-cases/User/Create.use-case';
-import { Body, Controller, Post } from '@nestjs/common';
 
 @Controller('user')
 export class UserController {

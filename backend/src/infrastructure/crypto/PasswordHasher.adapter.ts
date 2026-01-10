@@ -1,5 +1,6 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import * as argon2 from 'argon2';
+
 import { PasswordHasher } from '@auth/application/ports/PasswordHasher.port';
 
 @Injectable()

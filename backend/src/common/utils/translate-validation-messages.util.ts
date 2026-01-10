@@ -13,10 +13,16 @@ export function translateValidationMessages(rawMessages: string[], i18n: I18nSer
 
     let parsedArgs: Record<string, unknown> | undefined;
 
-    try {
-      parsedArgs = args ? JSON.parse(args) : undefined;
-    } catch {
-      parsedArgs = undefined;
+    if (args) {
+      try {
+        const parsed = JSON.parse(args) as unknown;
+
+        if (typeof parsed === 'object' && parsed !== null) {
+          parsedArgs = parsed as Record<string, unknown>;
+        }
+      } catch {
+        parsedArgs = undefined;
+      }
     }
 
     return i18n.translate(key, parsedArgs);
