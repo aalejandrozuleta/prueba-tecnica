@@ -5,6 +5,7 @@ import { DebtRepository } from '@auth/domain/repositories/Debt.repository';
 
 import { PrismaService } from './config/prisma.service';
 import { mapToDomain } from './mappers/debt.mapper';
+import { PaginatedResult } from '@auth/application/dto/Pagination.dto';
 
 @Injectable()
 export class PrismaDebtRepository implements DebtRepository {
@@ -108,6 +109,36 @@ export class PrismaDebtRepository implements DebtRepository {
     }
 
     return mapToDomain(record);
+  }
+
+  /**
+ * Obtiene deudas paginadas por usuario
+ */
+  async findPaginatedByUser(
+    userId: string,
+    page: number,
+    limit: number,
+  ): Promise<PaginatedResult<Debt>> {
+    const skip = (page - 1) * limit;
+
+    const [records, total] = await this.prisma.$transaction([
+      this.prisma.debt.findMany({
+        where: { debtorId: userId },
+        skip,
+        take: limit,
+        orderBy: { createdAt: 'desc' },
+      }),
+      this.prisma.debt.count({
+        where: { debtorId: userId },
+      }),
+    ]);
+
+    return {
+      data: records.map(mapToDomain),
+      total,
+      page,
+      limit,
+    };
   }
 
   /**

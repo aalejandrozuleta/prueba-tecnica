@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post, Put, Query, UseGuards } from '@nestjs/common';
 
 import { CreateDebtDto } from '@auth/application/dto/CreateDebt.dto';
 import { CreateDebtUseCase } from '@auth/application/use-cases/Debt/Create.use-case';
@@ -36,8 +36,10 @@ export class DebtController {
   }
 
   @Get()
-  async getMyDebts(@CurrentUser() user: AuthUser) {
-    return this.getDebtUseCase.execute(user.id);
+  async getMyDebts(@CurrentUser() user: AuthUser, @Query('page') page = '1',
+    @Query('limit') limit = '10',) {
+    return this.getDebtUseCase.execute(user.id,Number(page),
+      Number(limit),);
   }
 
   @Put()
