@@ -24,6 +24,7 @@ import { UpdateDebtUseCase } from '@auth/application/use-cases/Debt/UpdateDebt.u
 import { CurrentUser } from '../auth/decorators/current-user.decorator';
 import { JwtSessionGuard } from '../auth/guards/jwt-session.guard';
 import { AuthUser } from '../auth/types/auth-user.type';
+import { GetDebtsCountUseCase } from '@auth/application/use-cases/Debt/getDebtsCount.use-case';
 
 @ApiTags('Debt')
 @ApiBearerAuth()
@@ -36,6 +37,7 @@ export class DebtController {
     private readonly updateDebtUseCase: UpdateDebtUseCase,
     private readonly deleteDebtUseCase: DeleteDebtUseCase,
     private readonly payDebtUseCase: PayDebtUseCase,
+    private readonly getDebtsCountUseCase: GetDebtsCountUseCase,
   ) {}
 
   @Post('create')
@@ -115,5 +117,20 @@ export class DebtController {
   @ApiConflictResponse({ description: 'La deuda ya fue pagada' })
   async payDebt(@Body() dto: DeleteDebtDto, @CurrentUser() user: AuthUser) {
     return this.payDebtUseCase.execute(dto.id, user.id);
+  }
+
+  @Get('count')
+  @ApiOperation({
+    summary: 'Obtener el número de deudas de un usuario',
+    description: 'Obtiene el número de deudas de un usuario.',
+  })
+  @ApiQuery({ name: 'page', required: false, example: 1 })
+  @ApiQuery({ name: 'limit', required: false, example: 10 })
+  @ApiResponse({ status: 200, description: 'Número de deudas obtenido' })
+  @ApiUnauthorizedResponse({ description: 'No autorizado' })
+  async getDebtsCount(
+    @CurrentUser() user: AuthUser,
+  ){
+    return this.getDebtsCountUseCase.execute(user.id);
   }
 }
