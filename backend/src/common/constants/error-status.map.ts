@@ -2,13 +2,20 @@ import { HttpStatus } from '@nestjs/common';
 import { ERROR_CODES, ErrorCode } from './error-codes.constant';
 
 /**
- * Mapa centralizado de ErrorCode → HTTP Status
+ * Mapeo de códigos de error a HTTP status
  */
 export const ERROR_HTTP_STATUS: Record<ErrorCode, HttpStatus> = {
-  [ERROR_CODES.INTERNAL_ERROR]: HttpStatus.INTERNAL_SERVER_ERROR, // 500
-  [ERROR_CODES.VALIDATION_ERROR]: HttpStatus.BAD_REQUEST,         // 400
-  [ERROR_CODES.UNAUTHORIZED]: HttpStatus.UNAUTHORIZED,            // 401
-  [ERROR_CODES.FORBIDDEN]: HttpStatus.FORBIDDEN,                  // 403
-  [ERROR_CODES.NOT_FOUND]: HttpStatus.NOT_FOUND,                  // 404
-  [ERROR_CODES.USER_EMAIL_ALREADY_EXISTS]: HttpStatus.CONFLICT,   // 409
+  // Genéricos
+  [ERROR_CODES.INTERNAL_ERROR]: HttpStatus.INTERNAL_SERVER_ERROR,
+  [ERROR_CODES.VALIDATION_ERROR]: HttpStatus.BAD_REQUEST,
+
+  // Auth
+  [ERROR_CODES.AUTH_INVALID_CREDENTIALS]: HttpStatus.UNAUTHORIZED,
+  [ERROR_CODES.AUTH_ACCOUNT_BLOCKED]: HttpStatus.LOCKED,
+
+  // Session
+  [ERROR_CODES.SESSION_INVALID_REFRESH_TOKEN]: HttpStatus.UNAUTHORIZED,
+
+  // User
+  [ERROR_CODES.USER_EMAIL_ALREADY_EXISTS]: HttpStatus.CONFLICT,
 };

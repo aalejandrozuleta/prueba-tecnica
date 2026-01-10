@@ -10,7 +10,7 @@ import { ERROR_CODES } from '@auth/common/constants/error-codes.constant';
 
 import { USER_REPOSITORY } from '@auth/application/tokens/user-repository.token';
 import { PASSWORD_HASHER } from '@auth/application/tokens/password-hasher.token';
-import { EmailAlreadyExistsException } from '@auth/domain/exceptions/EmailAlreadyExists.exception';
+import { ExceptionFactory } from '@auth/domain/exceptions/ExceptionFactory';
 
 /**
  * Caso de uso: crear usuario
@@ -30,7 +30,7 @@ export class CreateUserUseCase {
 
     const exists = await this.userRepository.findByEmail(email);
     if (exists) {
-        throw new EmailAlreadyExistsException(dto.email);
+        throw ExceptionFactory.emailAlreadyExists(dto.email);
     }
 
     const hash = await this.passwordHasher.hash(dto.password);

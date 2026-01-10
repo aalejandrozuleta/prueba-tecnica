@@ -56,6 +56,9 @@ model User {
   // Relaciones
   debtsAsDebtor   Debt[]    @relation("Debtor")
   debtsAsCreditor Debt[]    @relation("Creditor")
+  
+  // 🔐 Relaciones de autenticación
+   authSessions    AuthSession[]
 
   @@map("users")
 }
@@ -106,3 +109,50 @@ model PaymentHistory {
   @@index([debtId])
   @@map("payment_history")
 }
+
+//////////////////////////////////////////////////////
+// AUTENTICACIÓN
+//////////////////////////////////////////////////////
+
+/**
+ * Sesiones activas del usuario
+ */
+model AuthSession {
+  id            String   @id @default(uuid())
+  userId        String
+
+  refreshToken  String   // HASHED
+  deviceId      String
+  ip            String
+  userAgent     String
+
+  expiresAt     DateTime
+  lastUsedAt    DateTime @default(now())
+
+  createdAt     DateTime @default(now())
+  revokedAt     DateTime?
+
+  user          User     @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([deviceId])
+  @@map("auth_sessions")
+}
+
+/**
+ * Auditoría de intentos de login
+ */
+model LoginAudit {
+  id         String   @id @default(uuid())
+  email      String
+  ip         String
+  userAgent String
+  success    Boolean
+
+  createdAt DateTime @default(now())
+
+  @@index([email])
+  @@index([ip])
+  @@map("login_audit")
+}
+

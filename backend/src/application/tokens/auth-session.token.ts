@@ -1,0 +1,1 @@
+export const AUTH_SESSION_SERVICE = Symbol('AUTH_SESSION_SERVICE');

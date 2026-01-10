@@ -8,7 +8,7 @@ export class UserController {
 
   }
 
-  @Post()
+  @Post('register')
   async create(@Body() dto: CreateUserDto) {
     return this.createUserUseCase.execute(dto);
   }

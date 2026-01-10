@@ -1,16 +1,14 @@
 import { NestFactory } from '@nestjs/core';
-import { BadRequestException, ValidationError, ValidationPipe, VersioningType } from '@nestjs/common';
+import { VersioningType } from '@nestjs/common';
 import passport from 'passport';
 import { AppModule } from './app.module';
 import { EnvService } from '@/config/env/env.service';
 import { SwaggerModule } from '@nestjs/swagger';
 import { swaggerConfig } from '@/config/swagger/swagger.config';
-import { requestContextMiddleware } from './common/context/request-context.middleware';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
-import { I18nService, I18nValidationPipe } from 'nestjs-i18n';
-
-
+import { I18nValidationPipe } from 'nestjs-i18n';
+import cookieParser from 'cookie-parser';
 
 /**
  * Bootstrap de la aplicación.
@@ -63,6 +61,8 @@ async function bootstrap(): Promise<void> {
       max: 100,
     }),
   );
+
+  app.use(cookieParser());
 
   await app.listen(env.port);
   console.log('Aplicación corriendo', env.port);

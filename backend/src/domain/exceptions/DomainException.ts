@@ -1,25 +1,22 @@
-import { HttpException } from '@nestjs/common';
-import { ErrorCode } from '@auth/common/constants/error-codes.constant';
-import { ERROR_HTTP_STATUS } from '@auth/common/constants/error-status.map';
-
 /**
- * Excepción base de dominio.
- * Extiende HttpException para que Nest NO la destruya.
+ * Excepción base del dominio (i18n-ready)
  */
-export class DomainException extends HttpException {
-  public readonly code: ErrorCode;
-  public readonly details?: unknown;
+export class DomainException extends Error {
+  readonly code: string;
+  readonly status: number;
+  readonly i18nKey: string;
+  readonly i18nArgs?: Record<string, unknown>;
 
-  constructor(code: ErrorCode, details?: unknown) {
-    super(
-      {
-        code,
-        details,
-      },
-      ERROR_HTTP_STATUS[code],
-    );
-
-    this.code = code;
-    this.details = details;
+  constructor(params: {
+    code: string;
+    status: number;
+    i18nKey: string;
+    i18nArgs?: Record<string, unknown>;
+  }) {
+    super(params.code);
+    this.code = params.code;
+    this.status = params.status;
+    this.i18nKey = params.i18nKey;
+    this.i18nArgs = params.i18nArgs;
   }
 }

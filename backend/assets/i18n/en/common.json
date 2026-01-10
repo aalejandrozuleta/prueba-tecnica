@@ -15,7 +15,11 @@
     "not_found": "Resource not found",
     "conflict": "Conflict with the current state of the resource",
     "rate_limit": "Too many requests, please try again later",
-    "service_unavailable": "Service unavailable"
+    "service_unavailable": "Service unavailable",
+    "session_invalid_refresh_token": "Invalid refresh token",
+    "auth_invalid_credentials": "Invalid credentials",
+    "auth_account_blocked": "Account is blocked temporarily",
+    "user_email_already_exists": "Email already exists"
   },
 
   "auth": {
