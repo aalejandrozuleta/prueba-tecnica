@@ -29,4 +29,9 @@ export class HashedPassword {
   getValue(): string {
     return this.value;
   }
+
+
+  static restore(hash: string): HashedPassword {
+    return new HashedPassword(hash);
+  }
 }

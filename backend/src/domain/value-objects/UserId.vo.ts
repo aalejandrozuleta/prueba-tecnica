@@ -1,5 +1,3 @@
-import { v4 as uuid } from 'uuid';
-
 /**
  * Value Object UserId
  */
@@ -10,7 +8,6 @@ export class UserId {
     if (!id) {
       throw new Error('Invalid user id');
     }
-
     this.value = id;
   }
 
@@ -18,7 +15,7 @@ export class UserId {
    * Crea un nuevo identificador de usuario
    */
   static create(): UserId {
-    return new UserId(uuid());
+    return new UserId(crypto.randomUUID());
   }
 
   /**

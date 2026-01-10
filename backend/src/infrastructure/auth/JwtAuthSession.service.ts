@@ -2,7 +2,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import Redis from 'ioredis';
-import { v4 as uuid } from 'uuid';
 
 import { AuthSessionService } from '@auth/application/ports/AuthSessionService.port';
 import { REDIS_CLIENT } from '@auth/application/tokens/redis.token';
@@ -81,7 +80,7 @@ export class AuthSessionServiceImpl implements AuthSessionService {
      * 2️⃣ Si no existe sesión, se crea una nueva.
      */
     if (!sessionId) {
-      sessionId = uuid();
+      sessionId = crypto.randomUUID();
       await this.redis.set(userSessionKey, sessionId, 'EX', 60 * 60 * 24);
     }
 

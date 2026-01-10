@@ -4,7 +4,7 @@
     "moduleResolution": "node",
 
     "target": "ES2021",
-    "types": ["node"],
+    "types": ["node","jest"],
 
     "outDir": "./dist",
     "sourceMap": true,
@@ -41,11 +41,6 @@
     }
   },
   "include": ["src/**/*.ts"],
-  "exclude": [
-    "node_modules",
-    "**/*.spec.ts",
-    "**/*.test.ts",
-    "**/__tests__/**",
-    "**/__mocks__/**"
-  ]
+  "exclude": ["node_modules", "dist"]
+
 }
