@@ -1,0 +1,115 @@
+{
+  "uid": "backend-logs",
+  "title": "Backend - Logs & Errors",
+  "timezone": "browser",
+  "schemaVersion": 38,
+  "version": 1,
+  "refresh": "10s",
+  "tags": ["backend", "logs", "loki", "nestjs"],
+  "panels": [
+    {
+      "id": 1,
+      "type": "logs",
+      "title": "Todos los logs (Backend)",
+      "datasource": {
+        "type": "loki",
+        "uid": "Loki"
+      },
+      "gridPos": { "x": 0, "y": 0, "w": 24, "h": 8 },
+      "targets": [
+        {
+          "expr": "{job=\"backend\"}",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "showTime": true,
+        "wrapLogMessage": true,
+        "dedupStrategy": "none"
+      }
+    },
+    {
+      "id": 2,
+      "type": "logs",
+      "title": "Errores (ERROR)",
+      "datasource": {
+        "type": "loki",
+        "uid": "Loki"
+      },
+      "gridPos": { "x": 0, "y": 8, "w": 24, "h": 6 },
+      "targets": [
+        {
+          "expr": "{job=\"backend\"} |= \"ERROR\"",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "showTime": true,
+        "wrapLogMessage": true
+      }
+    },
+    {
+      "id": 3,
+      "type": "stat",
+      "title": "Errores últimos 5 min",
+      "datasource": {
+        "type": "loki",
+        "uid": "Loki"
+      },
+      "gridPos": { "x": 0, "y": 14, "w": 8, "h": 4 },
+      "targets": [
+        {
+          "expr": "count_over_time({job=\"backend\"} |= \"ERROR\" [5m])",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "reduceOptions": {
+          "calcs": ["last"]
+        }
+      }
+    },
+    {
+      "id": 4,
+      "type": "stat",
+      "title": "Warnings últimos 5 min",
+      "datasource": {
+        "type": "loki",
+        "uid": "Loki"
+      },
+      "gridPos": { "x": 8, "y": 14, "w": 8, "h": 4 },
+      "targets": [
+        {
+          "expr": "count_over_time({job=\"backend\"} |= \"WARN\" [5m])",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "reduceOptions": {
+          "calcs": ["last"]
+        }
+      }
+    },
+    {
+      "id": 5,
+      "type": "stat",
+      "title": "Requests últimos 5 min",
+      "datasource": {
+        "type": "loki",
+        "uid": "Loki"
+      },
+      "gridPos": { "x": 16, "y": 14, "w": 8, "h": 4 },
+      "targets": [
+        {
+          "expr": "count_over_time({job=\"backend\"} |= \"HTTP\" [5m])",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "reduceOptions": {
+          "calcs": ["last"]
+        }
+      }
+    }
+  ]
+}
