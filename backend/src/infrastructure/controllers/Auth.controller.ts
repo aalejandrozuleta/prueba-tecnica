@@ -1,14 +1,48 @@
 import { Body, Controller, Ip, Post, Res } from '@nestjs/common';
 import { Response } from 'express';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiBody,
+  ApiResponse,
+  ApiBadRequestResponse,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
 
 import { LoginUserDto } from '@auth/application/dto/LoginUser.dto';
 import { LoginUserUseCase } from '@auth/application/use-cases/User/Login.use-case';
 
+@ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly loginUserUseCase: LoginUserUseCase) {}
 
   @Post('login')
+  @ApiOperation({
+    summary: 'Iniciar sesión',
+    description:
+      'Autentica un usuario y genera una sesión válida. ' +
+      'Los tokens se envían como cookies HTTP-only.',
+  })
+  @ApiBody({
+    type: LoginUserDto,
+    description: 'Credenciales del usuario',
+  })
+  @ApiResponse({
+    status: 201,
+    description: 'Inicio de sesión exitoso',
+    schema: {
+      example: {
+        success: true,
+      },
+    },
+  })
+  @ApiBadRequestResponse({
+    description: 'Datos de entrada inválidos',
+  })
+  @ApiUnauthorizedResponse({
+    description: 'Credenciales inválidas o cuenta bloqueada',
+  })
   async login(
     @Body() dto: LoginUserDto,
     @Ip() ip: string,
