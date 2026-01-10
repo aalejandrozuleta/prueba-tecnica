@@ -1,13 +1,10 @@
-import { Inject, Injectable, ConflictException } from '@nestjs/common';
-
+import { Inject, Injectable } from '@nestjs/common';
 import { CreateUserDto } from '@auth/application/dto/CreateUser.dto';
 import { PasswordHasher } from '@auth/application/ports/PasswordHasher.port';
 import { UserRepository } from '@auth/domain/repositories/User.repository';
 import { Email } from '@auth/domain/value-objects/Email.vo';
 import { HashedPassword } from '@auth/domain/value-objects/HashedPassword.vo';
 import { User } from '@auth/domain/entities/User.entity';
-import { ERROR_CODES } from '@auth/common/constants/error-codes.constant';
-
 import { USER_REPOSITORY } from '@auth/application/tokens/user-repository.token';
 import { PASSWORD_HASHER } from '@auth/application/tokens/password-hasher.token';
 import { ExceptionFactory } from '@auth/domain/exceptions/ExceptionFactory';

@@ -1,0 +1,19 @@
+{
+  "required": {
+    "amount": "Debe ingresar un monto",
+    "debtorId": "Debe ingresar un ID de usuario deudor",
+    "creditorId": "Debe ingresar un ID de usuario acreedor"
+  },
+  "invalid": {
+    "amount": "El monto debe ser un número positivo",
+    "description": "La descripción debe tener entre 1 y 255 caracteres",
+    "status": "El estado debe ser uno de los siguientes: PENDING, PAID",
+    "debtorId": "El ID de usuario deudor debe ser un UUID v4",
+    "creditorId": "El ID de usuario acreedor debe ser un UUID v4"
+  },
+
+  "active_limit_exceeded": "No puedes tener más de 3 deudas activas",
+  "debtor_not_found": "Deudor no encontrado",
+  "creditor_not_found": "Acreedor no encontrado"
+
+}

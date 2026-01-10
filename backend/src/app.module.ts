@@ -16,6 +16,7 @@ import { APP_FILTER } from '@nestjs/core';
 import { GlobalExceptionFilter } from './common/filters/global-exception.filter';
 import { UserModule } from './modules/user.module';
 import { AuthModule } from './modules/auth.module';
+import { DebtModule } from './modules/debt.module';
 
 @Module({
   imports: [
@@ -49,6 +50,7 @@ import { AuthModule } from './modules/auth.module';
     PrismaModule,
     UserModule,
     AuthModule,
+    DebtModule,
   ],
   providers: [EnvService,
     {

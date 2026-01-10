@@ -1,4 +1,3 @@
-import { UserRole } from "../enums/UserRole.enum";
 import { Email } from "../value-objects/Email.vo";
 import { HashedPassword } from "../value-objects/HashedPassword.vo";
 import { UserId } from "../value-objects/UserId.vo";

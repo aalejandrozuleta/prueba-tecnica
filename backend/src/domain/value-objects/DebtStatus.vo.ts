@@ -1,3 +1,6 @@
+/**
+ * Value Object que representa el estado de una deuda
+ */
 export class DebtStatus {
   private constructor(private readonly value: 'PENDING' | 'PAID') {}
 
@@ -13,7 +16,7 @@ export class DebtStatus {
     return this.value === 'PAID';
   }
 
-  getValue(): string {
+  getValue(): 'PENDING' | 'PAID' {
     return this.value;
   }
 }

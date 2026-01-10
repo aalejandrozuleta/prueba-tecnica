@@ -6,6 +6,10 @@ import { DomainException } from './DomainException';
  */
 export class ExceptionFactory {
 
+  /* =========================
+   * AUTH / USER
+   * ========================= */
+
   static invalidCredentials(): DomainException {
     return new DomainException({
       code: ERROR_CODES.AUTH_INVALID_CREDENTIALS,
@@ -39,4 +43,78 @@ export class ExceptionFactory {
       i18nKey: 'common.session.invalid_refresh_token',
     });
   }
+
+  /* =========================
+   * DEBT DOMAIN
+   * ========================= */
+
+  /**
+   * Monto de deuda inválido
+   */
+  static invalidDebtAmount(): DomainException {
+    return new DomainException({
+      code: ERROR_CODES.DEBT_INVALID_AMOUNT,
+      status: 400,
+      i18nKey: 'debt.invalid.amount',
+    });
+  }
+
+  /**
+   * Deudor y acreedor son el mismo usuario
+   */
+  static sameDebtorAndCreditor(): DomainException {
+    return new DomainException({
+      code: ERROR_CODES.DEBT_SAME_DEBTOR_AND_CREDITOR,
+      status: 400,
+      i18nKey: 'debt.same_debtor_and_creditor',
+    });
+  }
+
+  /**
+   * Intento de pagar una deuda ya pagada
+   */
+  static debtAlreadyPaid(): DomainException {
+    return new DomainException({
+      code: ERROR_CODES.DEBT_ALREADY_PAID,
+      status: 409,
+      i18nKey: 'debt.already_paid',
+    });
+  }
+
+  /**
+  * El deudor superó el límite de deudas activas
+  */
+  static activeDebtLimitExceeded(max: number): DomainException {
+    return new DomainException({
+      code: ERROR_CODES.DEBT_ACTIVE_LIMIT_EXCEEDED,
+      status: 409,
+      i18nKey: 'debt.active_limit_exceeded',
+      i18nArgs: { max },
+    });
+  }
+
+  /**
+   * Deudor no encontrado
+   */
+  static debtorNotFound(debtorId: string): DomainException {
+    return new DomainException({
+      code: ERROR_CODES.DEBTOR_NOT_FOUND,
+      status: 404,
+      i18nKey: 'debt.debtor_not_found',
+      i18nArgs: { debtorId },
+    });
+  }
+
+  /**
+   * Acreedor no encontrado
+   */
+  static creditorNotFound(creditorId: string): DomainException {
+    return new DomainException({
+      code: ERROR_CODES.CREDITOR_NOT_FOUND,
+      status: 404,
+      i18nKey: 'debt.creditor_not_found',
+      i18nArgs: { creditorId },
+    });
+  }
+
 }

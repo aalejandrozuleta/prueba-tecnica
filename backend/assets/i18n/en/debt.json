@@ -1,0 +1,18 @@
+{
+  "required": {
+    "amount": "Amount is required",
+    "debtorId": "Debtor ID is required",
+    "creditorId": "Creditor ID is required"
+  },
+  "invalid": {
+    "amount": "Amount must be a positive number",
+    "description": "Description must be between 1 and 255 characters",
+    "status": "Status must be one of the following: PENDING, PAID",
+    "debtorId": "Debtor ID must be a UUID v4",
+    "creditorId": "Creditor ID must be a UUID v4"
+  },
+
+  "active_limit_exceeded": "You cannot have more than 3 active debts",
+  "debtor_not_found": "Debtor not found",
+  "creditor_not_found": "Creditor not found"
+}
