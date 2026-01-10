@@ -11,6 +11,7 @@ import { DebtCacheService } from '@auth/infrastructure/cache/debt-cache.service'
 import { DebtController } from '@auth/infrastructure/controllers/Debt.controller';
 import { PrismaDebtRepository } from '@auth/infrastructure/prisma/PrismaDebtRepository';
 import { GetDebtsCountUseCase } from '@auth/application/use-cases/Debt/getDebtsCount.use-case';
+import { ExportDebtCsvUseCase } from '@auth/application/use-cases/Debt/ExportDebt.use-case';
 
 /**
  * Módulo de usuarios
@@ -24,6 +25,7 @@ import { GetDebtsCountUseCase } from '@auth/application/use-cases/Debt/getDebtsC
     DeleteDebtUseCase,
     PayDebtUseCase,
     GetDebtsCountUseCase,
+    ExportDebtCsvUseCase,
 
     {
       provide: DEBT_CACHE,

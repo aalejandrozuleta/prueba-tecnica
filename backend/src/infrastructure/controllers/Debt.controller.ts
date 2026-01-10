@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Post, Put, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post, Put, Query, Res, UseGuards } from '@nestjs/common';
 import {
   ApiTags,
   ApiBearerAuth,
@@ -25,6 +25,9 @@ import { CurrentUser } from '../auth/decorators/current-user.decorator';
 import { JwtSessionGuard } from '../auth/guards/jwt-session.guard';
 import { AuthUser } from '../auth/types/auth-user.type';
 import { GetDebtsCountUseCase } from '@auth/application/use-cases/Debt/getDebtsCount.use-case';
+import { ExportDebtCsvUseCase } from '@auth/application/use-cases/Debt/ExportDebt.use-case';
+import { Response } from 'express';
+
 
 @ApiTags('Debt')
 @ApiBearerAuth()
@@ -38,6 +41,7 @@ export class DebtController {
     private readonly deleteDebtUseCase: DeleteDebtUseCase,
     private readonly payDebtUseCase: PayDebtUseCase,
     private readonly getDebtsCountUseCase: GetDebtsCountUseCase,
+    private readonly exportDebtCsvUseCase: ExportDebtCsvUseCase,
   ) {}
 
   @Post('create')
@@ -124,13 +128,35 @@ export class DebtController {
     summary: 'Obtener el número de deudas de un usuario',
     description: 'Obtiene el número de deudas de un usuario.',
   })
-  @ApiQuery({ name: 'page', required: false, example: 1 })
-  @ApiQuery({ name: 'limit', required: false, example: 10 })
   @ApiResponse({ status: 200, description: 'Número de deudas obtenido' })
   @ApiUnauthorizedResponse({ description: 'No autorizado' })
   async getDebtsCount(
     @CurrentUser() user: AuthUser,
   ){
     return this.getDebtsCountUseCase.execute(user.id);
+  }
+
+
+  @Get('export')
+  @ApiOperation({
+    summary: 'Exportar deudas de un usuario',
+    description: 'Exporta las deudas de un usuario.',
+  })
+  @ApiResponse({ status: 200, description: 'Deudas exportadas' })
+  @ApiUnauthorizedResponse({ description: 'No autorizado' })
+    @Get('export')
+  async exportCsv(
+    @CurrentUser() user: AuthUser,
+    @Res() res: Response,
+  ): Promise<void> {
+    const csv = await this.exportDebtCsvUseCase.execute(user.id);
+
+    res.setHeader('Content-Type', 'text/csv');
+    res.setHeader(
+      'Content-Disposition',
+      'attachment; filename="debts.csv"',
+    );
+
+    res.send(csv);
   }
 }
