@@ -53,15 +53,6 @@ export class CreateDebtDto {
   })
   status?: DebtStatus;
 
-  /**
-   * ID del usuario deudor
-   */
-  @IsUUID('4', {
-    message: i18nValidationMessage('debt.invalid.debtorId'),
-  })
-  @IsNotEmpty({
-    message: i18nValidationMessage('debt.required.debtorId'),
-  })
   debtorId!: string;
 
   /**

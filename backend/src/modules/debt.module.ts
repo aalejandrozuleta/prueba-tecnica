@@ -8,6 +8,8 @@ import { GetDebtUseCase } from '@auth/application/use-cases/Debt/GetDebt.use-cas
 import { UpdateDebtUseCase } from '@auth/application/use-cases/Debt/UpdateDebt.use-case';
 import { DeleteDebtUseCase } from '@auth/application/use-cases/Debt/DeleteDebt.use-case';
 import { PayDebtUseCase } from '@auth/application/use-cases/Debt/PayDebt.use-case';
+import { DebtCacheService } from '@auth/infrastructure/cache/debt-cache.service';
+import { DEBT_CACHE } from '@auth/application/tokens/debtCache.token';
 
 /**
  * Módulo de usuarios
@@ -20,6 +22,11 @@ import { PayDebtUseCase } from '@auth/application/use-cases/Debt/PayDebt.use-cas
     UpdateDebtUseCase,
     DeleteDebtUseCase,
     PayDebtUseCase,
+
+    {
+      provide: DEBT_CACHE,
+      useClass: DebtCacheService,
+    },
 
     {
       provide: DEBT_REPOSITORY,

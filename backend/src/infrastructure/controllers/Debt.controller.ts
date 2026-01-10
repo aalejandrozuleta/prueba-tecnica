@@ -32,7 +32,7 @@ export class DebtController {
     return this.createDebtUseCase.execute({
       ...dto,
       debtorId: user.id,
-    });
+    }, user.id);
   }
 
   @Get()
@@ -43,17 +43,17 @@ export class DebtController {
   }
 
   @Put()
-  async updateDebt(@Body() dto: UpdateDebtDto) {
-    return this.updateDebtUseCase.execute(dto);
+  async updateDebt(@Body() dto: UpdateDebtDto, @CurrentUser() user: AuthUser) {
+    return this.updateDebtUseCase.execute(dto, user.id);
   }
 
   @Delete()
-  async deleteDebt(@Body() dto: DeleteDebtDto) {
-    return this.deleteDebtUseCase.execute(dto.id);
+  async deleteDebt(@Body() dto: DeleteDebtDto, @CurrentUser() user: AuthUser) {
+    return this.deleteDebtUseCase.execute(dto.id, user.id);
   }
 
   @Post('pay')
-  async payDebt(@Body() dto: DeleteDebtDto) {
-    return this.payDebtUseCase.execute(dto.id);
+  async payDebt(@Body() dto: DeleteDebtDto, @CurrentUser() user: AuthUser) {
+    return this.payDebtUseCase.execute(dto.id, user.id);
   }
 }
