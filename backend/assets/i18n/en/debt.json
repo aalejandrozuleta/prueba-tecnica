@@ -19,5 +19,8 @@
   "debtor_not_found": "Debtor not found",
   "creditor_not_found": "Creditor not found",
   "debt_not_found": "Debt not found",
-  "same_debtor_and_creditor": "Debtor and creditor are the same user"
+  "same_debtor_and_creditor": "Debtor and creditor are the same user",
+  "already_paid": "Debt already paid",
+  "positiveAmount": "Amount must be a positive number",
+  "requiredAmount": "Amount is required"
 }

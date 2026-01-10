@@ -28,8 +28,8 @@ export class CreateDebtDto {
    * - Debe ser un número positivo
    */
   @IsNumber({ maxDecimalPlaces: 2 }, { message: i18nValidationMessage('debt.invalid.amount') })
-  @IsPositive({ message: i18nValidationMessage('debt.positive.amount') })
-  @IsNotEmpty({ message: i18nValidationMessage('debt.required.amount') })
+  @IsPositive({ message: i18nValidationMessage('debt.positiveAmount') })
+  @IsNotEmpty({ message: i18nValidationMessage('debt.requiredAmount') })
   amount!: number;
 
   /**

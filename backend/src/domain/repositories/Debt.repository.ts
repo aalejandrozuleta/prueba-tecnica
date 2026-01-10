@@ -8,4 +8,5 @@ export interface DebtRepository {
   findDebtsByUserId(userId: string): Promise<Debt[]>;
   findById(id: string): Promise<Debt | null>;
   delete(debt: Debt): Promise<void>;
+  pay(id: string): Promise<void>;
 }

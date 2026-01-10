@@ -18,6 +18,9 @@
   "debtor_not_found": "Deudor no encontrado",
   "creditor_not_found": "Acreedor no encontrado",
   "debt_not_found": "Deuda no encontrada",
-  "same_debtor_and_creditor": "Debtor y acreedor son el mismo usuario"
+  "same_debtor_and_creditor": "Debtor y acreedor son el mismo usuario",
+  "already_paid": "La deuda ya está pagada",
+  "positiveAmount": "El monto debe ser un número positivo",
+  "requiredAmount": "Debe ingresar un monto"
 
 }

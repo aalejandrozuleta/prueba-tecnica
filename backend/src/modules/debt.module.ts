@@ -7,6 +7,7 @@ import { PrismaDebtRepository } from '@auth/infrastructure/prisma/PrismaDebtRepo
 import { GetDebtUseCase } from '@auth/application/use-cases/Debt/GetDebt.use-case';
 import { UpdateDebtUseCase } from '@auth/application/use-cases/Debt/UpdateDebt.use-case';
 import { DeleteDebtUseCase } from '@auth/application/use-cases/Debt/DeleteDebt.use-case';
+import { PayDebtUseCase } from '@auth/application/use-cases/Debt/PayDebt.use-case';
 
 /**
  * Módulo de usuarios
@@ -18,6 +19,7 @@ import { DeleteDebtUseCase } from '@auth/application/use-cases/Debt/DeleteDebt.u
     GetDebtUseCase,
     UpdateDebtUseCase,
     DeleteDebtUseCase,
+    PayDebtUseCase,
 
     {
       provide: DEBT_REPOSITORY,

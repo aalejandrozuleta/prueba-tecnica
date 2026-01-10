@@ -10,7 +10,7 @@ import { UpdateDebtUseCase } from '@auth/application/use-cases/Debt/UpdateDebt.u
 import { UpdateDebtDto } from '@auth/application/dto/UpdateDebt.dto';
 import { DeleteDebtUseCase } from '@auth/application/use-cases/Debt/DeleteDebt.use-case';
 import { DeleteDebtDto } from '@auth/application/dto/DeleteDebt.dto';
-
+import { PayDebtUseCase } from '@auth/application/use-cases/Debt/PayDebt.use-case';
 
 @Controller('debt')
 @UseGuards(JwtSessionGuard)
@@ -20,6 +20,8 @@ export class DebtController {
     private readonly getDebtUseCase: GetDebtUseCase,
     private readonly updateDebtUseCase: UpdateDebtUseCase,
     private readonly deleteDebtUseCase: DeleteDebtUseCase,
+    private readonly payDebtUseCase: PayDebtUseCase,
+
   ) { }
 
   @Post('create')
@@ -46,5 +48,10 @@ export class DebtController {
   @Delete()
   async deleteDebt(@Body() dto: DeleteDebtDto) {
     return this.deleteDebtUseCase.execute(dto.id);
+  }
+
+  @Post('pay')
+  async payDebt(@Body() dto: DeleteDebtDto) {
+    return this.payDebtUseCase.execute(dto.id);
   }
 }

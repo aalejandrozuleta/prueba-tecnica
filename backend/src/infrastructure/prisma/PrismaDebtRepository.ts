@@ -119,4 +119,15 @@ export class PrismaDebtRepository implements DebtRepository {
       where: { id: debt.getId() },
     });
   }
+
+  /**
+   * Paga una deuda
+   */
+
+  async pay(id: string): Promise<void> {
+    await this.prisma.debt.update({
+      where: { id },
+      data: { status: 'PAID', paidAt: new Date() },
+    });
+  }
 }

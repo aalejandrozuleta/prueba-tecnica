@@ -24,6 +24,10 @@ export class UpdateDebtUseCase {
       throw ExceptionFactory.debtNotFound(dto.id);
     }
 
+    if (debt.getStatus() === 'PAID' ) {
+      throw ExceptionFactory.debtAlreadyPaid();
+    }
+
 
     if (dto.amount !== undefined) {
       debt.updateAmount(new Money(dto.amount));
