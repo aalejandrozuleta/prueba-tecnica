@@ -1,20 +1,21 @@
 import { ThemeProvider } from '@/context/ThemeContext';
 import { ToastProvider } from '@/context/ToastContext';
+import { LanguageProvider } from '@/context/LanguageContext';
 import { Toast } from '@/components/shared/Toast';
+import './globals.css';
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className="bg-gray-50 text-gray-900 transition-colors dark:bg-gray-950 dark:text-gray-100">
+    <html lang="es" suppressHydrationWarning>
+      <body className="bg-gray-50 dark:bg-gray-950 transition-colors">
         <ThemeProvider>
-          <ToastProvider>
-            {children}
-            <Toast />
-          </ToastProvider>
+          <LanguageProvider>
+            <ToastProvider>
+              {children}
+              <Toast />
+            </ToastProvider>
+          </LanguageProvider>
         </ThemeProvider>
       </body>
     </html>

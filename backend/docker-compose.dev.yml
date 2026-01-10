@@ -56,7 +56,7 @@ services:
       dockerfile: Dockerfile.dev
     container_name: backendProject
     ports:
-      - "3000:3000"
+      - "8000:8000"
     env_file:
       - .env.development
     volumes:

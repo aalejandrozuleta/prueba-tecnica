@@ -1,7 +1,20 @@
-import React from 'react'
+'use client';
 
-export default function Page() {
+import { AuthLayout } from '@/components/templates/AuthLayout';
+import { RegisterForm } from '@/components/organism/RegisterForm';
+import { useLanguage } from '@/hooks/useLanguage';
+import { getRegisterTexts } from '@/libs/i18n';
+
+/**
+ * Página de registro.
+ */
+export default function RegisterPage() {
+  const { language } = useLanguage();
+  const texts = getRegisterTexts(language);
+
   return (
-    <div>page</div>
-  )
+    <AuthLayout title={texts.title} subtitle={texts.subtitle}>
+      <RegisterForm />
+    </AuthLayout>
+  );
 }
