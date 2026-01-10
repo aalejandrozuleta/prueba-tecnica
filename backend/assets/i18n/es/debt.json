@@ -14,6 +14,8 @@
 
   "active_limit_exceeded": "No puedes tener más de 3 deudas activas",
   "debtor_not_found": "Deudor no encontrado",
-  "creditor_not_found": "Acreedor no encontrado"
+  "creditor_not_found": "Acreedor no encontrado",
+  "debt_not_found": "Deuda no encontrada",
+  "same_debtor_and_creditor": "Debtor y acreedor son el mismo usuario"
 
 }

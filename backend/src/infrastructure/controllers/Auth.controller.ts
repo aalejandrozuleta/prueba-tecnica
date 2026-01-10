@@ -3,6 +3,7 @@ import { Response } from 'express';
 
 import { LoginUserDto } from '@auth/application/dto/LoginUser.dto';
 import { LoginUserUseCase } from '@auth/application/use-cases/User/Login.use-case';
+import { EnvService } from '@auth/config/env/env.service';
 
 @Controller('auth')
 export class AuthController {
@@ -19,16 +20,16 @@ export class AuthController {
     // Access token (corto)
     res.cookie('access_token', accessToken, {
       httpOnly: true,
-      secure: true, // true en prod
-      sameSite: 'strict', // o 'lax'
+      secure: false, // true en prod
+      sameSite: 'lax', // o 'lax'
       maxAge: 15 * 60 * 1000, // 15 min
     });
 
     // Refresh token (largo)
     res.cookie('refresh_token', refreshToken, {
       httpOnly: true,
-      secure: true,
-      sameSite: 'strict',
+      secure: false,
+      sameSite: 'lax',
       maxAge: 30 * 24 * 60 * 60 * 1000, // 30 días
     });
 

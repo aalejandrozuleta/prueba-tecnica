@@ -6,13 +6,13 @@ import { PASSWORD_HASHER } from '@auth/application/tokens/password-hasher.token'
 import { USER_REPOSITORY } from '@auth/application/tokens/user-repository.token';
 import { LoginUserUseCase } from '@auth/application/use-cases/User/Login.use-case';
 import { EnvModule } from '@auth/config/env/env.module';
-import { AuthSessionServiceImpl } from '@auth/infrastructure/auth/AuthSession.service';
 import { JwtConfigModule } from '@auth/infrastructure/auth/jwt.module';
 import { AuthController } from '@auth/infrastructure/controllers/Auth.controller';
 import { ArgonPasswordHasher } from '@auth/infrastructure/crypto/PasswordHasher.adapter';
 import { PrismaUserRepository } from '@auth/infrastructure/prisma/PrismaUserRepository';
 import { LoginAttemptRedisAdapter } from '@auth/infrastructure/redis/LoginAttemptRedis.adapter';
 import { RedisModule } from '@auth/infrastructure/redis/redis.module';
+import { AuthSessionServiceImpl } from '@auth/infrastructure/auth/JwtAuthSession.service';
 
 @Module({
   imports: [RedisModule, JwtConfigModule, EnvModule],

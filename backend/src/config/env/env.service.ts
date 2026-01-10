@@ -53,4 +53,8 @@ export class EnvService {
   get redisPassword(): string | undefined {
     return this.config.get('REDIS_PASSWORD');
   }
+
+  get redisDatabase(): number {
+    return this.config.getOrThrow('REDIS_DATABASE');
+  }
 }

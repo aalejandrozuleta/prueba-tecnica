@@ -1,13 +1,15 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import Redis from 'ioredis';
 
 import { LoginAttemptRepository } from '@auth/application/ports/LoginAttemptRepository.port';
+import { REDIS_CLIENT } from '@auth/application/tokens/redis.token';
 
 @Injectable()
 export class LoginAttemptRedisAdapter implements LoginAttemptRepository {
   private static readonly FAIL_TTL_SECONDS = 15 * 60; // 15 min
 
-  constructor(private readonly redis: Redis) {}
+  constructor(@Inject(REDIS_CLIENT)
+  private readonly redis: Redis,) { }
 
   private failKey(email: string, ip: string): string {
     return `login:fail:${email}:${ip}`;

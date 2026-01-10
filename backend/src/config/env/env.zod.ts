@@ -1,4 +1,3 @@
-// src/config/env/env.zod.ts
 import { z } from 'zod';
 
 /**
@@ -24,6 +23,7 @@ export const envSchema = z.object({
   REDIS_HOST: z.string(),
   REDIS_PORT: z.coerce.number().default(6379),
   REDIS_PASSWORD: z.string().optional(),
+  REDIS_DATABASE: z.coerce.number().default(0),
 });
 
 export type EnvVars = z.infer<typeof envSchema>;

@@ -8,7 +8,7 @@ import { mapToDomain } from './mappers/debt.mapper';
 
 @Injectable()
 export class PrismaDebtRepository implements DebtRepository {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
   /**
    * Obtiene todas las deudas de un deudor
@@ -66,4 +66,14 @@ export class PrismaDebtRepository implements DebtRepository {
 
     return mapToDomain(record);
   }
+
+  async findDebtsByUserId(userId: string): Promise<Debt[]> {
+    const records = await this.prisma.debt.findMany({
+      where: { debtorId: userId },
+      orderBy: { createdAt: 'desc' },
+    });
+
+    return records.map(mapToDomain);
+  }
+
 }

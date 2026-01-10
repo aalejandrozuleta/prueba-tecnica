@@ -116,4 +116,44 @@ export class ExceptionFactory {
       i18nArgs: { creditorId },
     });
   }
+
+  /**
+   * Debt no encontrado
+   */
+  static debtNotFound(id: string): DomainException {
+    return new DomainException({
+      code: ERROR_CODES.DEBT_NOT_FOUND,
+      status: 404,
+      i18nKey: 'debt.debt_not_found',
+      i18nArgs: { id },
+    });
+  }
+
+  /* =========================
+   * GENERIC
+   * ========================= */
+  
+  /**
+   * Error en autorización
+   * 
+   */
+  static unauthorized(): DomainException {
+    return new DomainException({
+      code: ERROR_CODES.UNAUTHORIZED,
+      status: 401,
+      i18nKey: 'common.auth.unauthorized',
+    });
+  }
+
+  /**
+   * Error en sesión
+   * 
+   */
+  static sessionExpired(): DomainException {
+    return new DomainException({
+      code: ERROR_CODES.SESSION_EXPIRED,
+      status: 401,
+      i18nKey: 'common.auth.token_expired',
+    });
+  }
 }

@@ -5,4 +5,5 @@ export interface DebtRepository {
   findByCreditorId(creditorId: string): Promise<boolean>;
   create(data: Debt): Promise<Debt>;
   countActiveByDebtor(debtorId: string): Promise<number>;
+  findDebtsByUserId(userId: string): Promise<Debt[]>;
 }

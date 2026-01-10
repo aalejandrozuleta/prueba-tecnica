@@ -29,7 +29,8 @@
     "token_expired": "El token ha expirado",
     "token_invalid": "Token inválido",
     "account_blocked": "La cuenta está bloqueada",
-    "account_not_verified": "La cuenta no está verificada"
+    "account_not_verified": "La cuenta no está verificada",
+    "unauthorized": "No autorizado"
   },
 
   "validation": {
