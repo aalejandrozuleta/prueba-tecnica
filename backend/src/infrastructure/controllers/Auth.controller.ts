@@ -3,7 +3,6 @@ import { Response } from 'express';
 
 import { LoginUserDto } from '@auth/application/dto/LoginUser.dto';
 import { LoginUserUseCase } from '@auth/application/use-cases/User/Login.use-case';
-import { EnvService } from '@auth/config/env/env.service';
 
 @Controller('auth')
 export class AuthController {

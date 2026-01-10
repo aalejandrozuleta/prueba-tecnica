@@ -2,14 +2,22 @@
  * DTO para actualizar una deuda existente
  */
 
-import { IsEnum, IsNotEmpty, IsNumber, IsOptional, IsPositive, IsString, IsUUID, MaxLength } from "class-validator";
-import { i18nValidationMessage } from "nestjs-i18n";
+import {
+  IsEnum,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsPositive,
+  IsString,
+  IsUUID,
+  MaxLength,
+} from 'class-validator';
+import { i18nValidationMessage } from 'nestjs-i18n';
 
 export enum DebtStatusEnum {
   PENDING = 'PENDING',
   PAID = 'PAID',
 }
-
 
 export class UpdateDebtDto {
   /** ID de la deuda */
@@ -19,10 +27,10 @@ export class UpdateDebtDto {
   id!: string;
 
   /**
-     * Monto de la deuda
-     * - Decimal(10,2) en base de datos
-     * - Debe ser un número positivo
-     */
+   * Monto de la deuda
+   * - Decimal(10,2) en base de datos
+   * - Debe ser un número positivo
+   */
   @IsNumber({ maxDecimalPlaces: 2 }, { message: i18nValidationMessage('debt.invalid.amount') })
   @IsPositive({ message: i18nValidationMessage('debt.positiveAmount') })
   @IsNotEmpty({ message: i18nValidationMessage('debt.required.amount') })
@@ -40,8 +48,8 @@ export class UpdateDebtDto {
   status?: DebtStatusEnum;
 
   /**
-     * Descripción opcional de la deuda
-     */
+   * Descripción opcional de la deuda
+   */
   @IsOptional()
   @IsString({ message: i18nValidationMessage('debt.invalid.description') })
   @MaxLength(255, {

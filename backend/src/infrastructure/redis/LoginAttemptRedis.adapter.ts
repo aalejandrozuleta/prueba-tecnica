@@ -8,8 +8,10 @@ import { REDIS_CLIENT } from '@auth/application/tokens/redis.token';
 export class LoginAttemptRedisAdapter implements LoginAttemptRepository {
   private static readonly FAIL_TTL_SECONDS = 15 * 60; // 15 min
 
-  constructor(@Inject(REDIS_CLIENT)
-  private readonly redis: Redis,) { }
+  constructor(
+    @Inject(REDIS_CLIENT)
+    private readonly redis: Redis,
+  ) {}
 
   private failKey(email: string, ip: string): string {
     return `login:fail:${email}:${ip}`;

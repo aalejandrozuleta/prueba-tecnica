@@ -132,10 +132,10 @@ export class ExceptionFactory {
   /* =========================
    * GENERIC
    * ========================= */
-  
+
   /**
    * Error en autorización
-   * 
+   *
    */
   static unauthorized(): DomainException {
     return new DomainException({
@@ -147,7 +147,7 @@ export class ExceptionFactory {
 
   /**
    * Error en sesión
-   * 
+   *
    */
   static sessionExpired(): DomainException {
     return new DomainException({

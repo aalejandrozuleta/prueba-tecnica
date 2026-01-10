@@ -1,13 +1,14 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { DEBT_REPOSITORY } from '@auth/application/tokens/debt-repository.token';
-import { Debt } from '@auth/domain/entities/Debt.entity';
-import { DebtRepository } from '@auth/domain/repositories/Debt.repository';
+
 import { UpdateDebtDto } from '@auth/application/dto/UpdateDebt.dto';
-import { ExceptionFactory } from '@auth/domain/exceptions/ExceptionFactory';
-import { Money } from '@auth/domain/value-objects/Money.vo';
-import { DebtStatus } from '@auth/domain/value-objects/DebtStatus.vo';
-import { DebtCacheService } from '@auth/infrastructure/cache/debt-cache.service';
+import { DEBT_REPOSITORY } from '@auth/application/tokens/debt-repository.token';
 import { DEBT_CACHE } from '@auth/application/tokens/debtCache.token';
+import { Debt } from '@auth/domain/entities/Debt.entity';
+import { ExceptionFactory } from '@auth/domain/exceptions/ExceptionFactory';
+import { DebtRepository } from '@auth/domain/repositories/Debt.repository';
+import { DebtStatus } from '@auth/domain/value-objects/DebtStatus.vo';
+import { Money } from '@auth/domain/value-objects/Money.vo';
+import { DebtCacheService } from '@auth/infrastructure/cache/debt-cache.service';
 
 /**
  * Caso de uso: crear deuda
@@ -18,8 +19,8 @@ export class UpdateDebtUseCase {
     @Inject(DEBT_REPOSITORY)
     private readonly debtRepository: DebtRepository,
     @Inject(DEBT_CACHE)
-        private readonly debtCache: DebtCacheService,
-  ) { }
+    private readonly debtCache: DebtCacheService,
+  ) {}
 
   async execute(dto: UpdateDebtDto, userId: string): Promise<Debt> {
     const debt = await this.debtRepository.findById(dto.id);
@@ -28,10 +29,9 @@ export class UpdateDebtUseCase {
       throw ExceptionFactory.debtNotFound(dto.id);
     }
 
-    if (debt.getStatus() === 'PAID' ) {
+    if (debt.getStatus() === 'PAID') {
       throw ExceptionFactory.debtAlreadyPaid();
     }
-
 
     if (dto.amount !== undefined) {
       debt.updateAmount(new Money(dto.amount));
@@ -42,8 +42,7 @@ export class UpdateDebtUseCase {
     }
 
     if (dto.status !== undefined) {
-        debt.updateStatus(DebtStatus.from(dto.status));
-
+      debt.updateStatus(DebtStatus.from(dto.status));
     }
 
     await this.debtCache.invalidateByPattern(`debts:${userId}:page:*`);

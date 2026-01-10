@@ -1,4 +1,5 @@
 import { PaginatedResult } from '@auth/application/dto/Pagination.dto';
+
 import { Debt } from '../entities/Debt.entity';
 
 export interface DebtRepository {
@@ -10,5 +11,5 @@ export interface DebtRepository {
   findById(id: string): Promise<Debt | null>;
   delete(debt: Debt): Promise<void>;
   pay(id: string): Promise<void>;
-  findPaginatedByUser(userId: string,page: number,limit: number,): Promise<PaginatedResult<Debt>>;
+  findPaginatedByUser(userId: string, page: number, limit: number): Promise<PaginatedResult<Debt>>;
 }

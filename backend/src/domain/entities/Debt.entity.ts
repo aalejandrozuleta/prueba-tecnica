@@ -14,8 +14,8 @@ export class Debt {
 
   private readonly debtorId: string;
   private readonly creditorId: string;
-  private  amount: Money;
-  private readonly updatedAt?: Date;
+  private amount: Money;
+  private updatedAt?: Date;
 
   /**
    * Constructor interno
@@ -93,7 +93,6 @@ export class Debt {
     });
   }
 
-
   /**
    * Marca la deuda como pagada
    */
@@ -144,48 +143,48 @@ export class Debt {
     return this.createdAt;
   }
 
+  getUpdatedAt(): Date | undefined {
+    return this.updatedAt;
+  }
+
   /**
- * Actualiza el monto de la deuda
- */
-updateAmount(amount: Money): void {
-  if (this.status.isPaid()) {
-    throw ExceptionFactory.debtAlreadyPaid();
+   * Actualiza el monto de la deuda
+   */
+  updateAmount(amount: Money): void {
+    if (this.status.isPaid()) {
+      throw ExceptionFactory.debtAlreadyPaid();
+    }
+
+    this.amount = amount;
+    this.touch();
   }
 
-  this.amount = amount;
-  this.touch();
-}
-
-/**
- * Actualiza la descripción
- */
-updateDescription(description?: string): void {
-  this.description = description;
-  this.touch();
-}
-
-/**
- * Cambia el estado de la deuda
- */
-updateStatus(status: DebtStatus): void {
-  if (this.status.isPaid()) {
-    throw ExceptionFactory.debtAlreadyPaid();
+  /**
+   * Actualiza la descripción
+   */
+  updateDescription(description?: string): void {
+    this.description = description;
+    this.touch();
   }
 
-  this.status = status;
+  /**
+   * Cambia el estado de la deuda
+   */
+  updateStatus(status: DebtStatus): void {
+    if (this.status.isPaid()) {
+      throw ExceptionFactory.debtAlreadyPaid();
+    }
 
-  if (status.isPaid()) {
-    this.paidAt = new Date();
+    this.status = status;
+
+    if (status.isPaid()) {
+      this.paidAt = new Date();
+    }
+
+    this.touch();
   }
 
-  this.touch();
-}
-
-/**
- * Marca la entidad como actualizada
- */
-private touch(): void {
-  (this as any).updatedAt = new Date();
-}
-
+  private touch(): void {
+    this.updatedAt = new Date();
+  }
 }

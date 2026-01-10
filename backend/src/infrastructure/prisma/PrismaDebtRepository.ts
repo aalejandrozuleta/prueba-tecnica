@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
 
+import { PaginatedResult } from '@auth/application/dto/Pagination.dto';
 import { Debt } from '@auth/domain/entities/Debt.entity';
 import { DebtRepository } from '@auth/domain/repositories/Debt.repository';
 
 import { PrismaService } from './config/prisma.service';
 import { mapToDomain } from './mappers/debt.mapper';
-import { PaginatedResult } from '@auth/application/dto/Pagination.dto';
 
 @Injectable()
 export class PrismaDebtRepository implements DebtRepository {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   /**
    * Obtiene todas las deudas de un deudor
@@ -64,31 +64,30 @@ export class PrismaDebtRepository implements DebtRepository {
 
     const record = exists
       ? await this.prisma.debt.update({
-        where: { id: debt.getId() },
-        data: {
-          amount: debt.getAmount(),
-          description: debt.getDescription(),
-          status: debt.getStatus(),
-          paidAt: debt.getPaidAt(),
-          updatedAt: new Date(),
-        },
-      })
+          where: { id: debt.getId() },
+          data: {
+            amount: debt.getAmount(),
+            description: debt.getDescription(),
+            status: debt.getStatus(),
+            paidAt: debt.getPaidAt(),
+            updatedAt: new Date(),
+          },
+        })
       : await this.prisma.debt.create({
-        data: {
-          id: debt.getId(),
-          amount: debt.getAmount(),
-          description: debt.getDescription(),
-          status: debt.getStatus(),
-          debtorId: debt.getDebtorId(),
-          creditorId: debt.getCreditorId(),
-          createdAt: debt.getCreatedAt(),
-          paidAt: debt.getPaidAt(),
-        },
-      });
+          data: {
+            id: debt.getId(),
+            amount: debt.getAmount(),
+            description: debt.getDescription(),
+            status: debt.getStatus(),
+            debtorId: debt.getDebtorId(),
+            creditorId: debt.getCreditorId(),
+            createdAt: debt.getCreatedAt(),
+            paidAt: debt.getPaidAt(),
+          },
+        });
 
     return mapToDomain(record);
   }
-
 
   async findDebtsByUserId(userId: string): Promise<Debt[]> {
     const records = await this.prisma.debt.findMany({
@@ -112,8 +111,8 @@ export class PrismaDebtRepository implements DebtRepository {
   }
 
   /**
- * Obtiene deudas paginadas por usuario
- */
+   * Obtiene deudas paginadas por usuario
+   */
   async findPaginatedByUser(
     userId: string,
     page: number,

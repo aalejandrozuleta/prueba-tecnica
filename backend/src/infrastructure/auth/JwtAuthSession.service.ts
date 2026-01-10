@@ -1,14 +1,12 @@
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { Inject, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import Redis from 'ioredis';
 import { v4 as uuid } from 'uuid';
 
-import { AuthSessionService } from
-  '@auth/application/ports/AuthSessionService.port';
-import { ExceptionFactory } from
-  '@auth/domain/exceptions/ExceptionFactory';
-import { REDIS_CLIENT } from
-  '@auth/application/tokens/redis.token';
+import { AuthSessionService } from '@auth/application/ports/AuthSessionService.port';
+import { REDIS_CLIENT } from '@auth/application/tokens/redis.token';
+import { ExceptionFactory } from '@auth/domain/exceptions/ExceptionFactory';
 
 /**
  * Implementación de manejo de sesiones con JWT + Redis
@@ -20,14 +18,13 @@ export class AuthSessionServiceImpl implements AuthSessionService {
 
     @Inject(REDIS_CLIENT)
     private readonly redis: Redis,
-  ) { }
+  ) {}
 
   async createSession(
     userId: string,
     email: string,
     name?: string,
   ): Promise<{ accessToken: string; refreshToken: string }> {
-
     const userSessionKey = `user_session:${userId}`;
 
     // 1️⃣ ¿Ya existe una sesión para este usuario?
@@ -49,22 +46,13 @@ export class AuthSessionServiceImpl implements AuthSessionService {
     };
 
     // 3️⃣ Guardamos / renovamos la sesión
-    await this.redis.set(
-      sessionKey,
-      JSON.stringify(payload),
-      'EX',
-      60 * 60 * 24,
-    );
+    await this.redis.set(sessionKey, JSON.stringify(payload), 'EX', 60 * 60 * 24);
 
     return {
       accessToken: this.jwtService.sign(payload, { expiresIn: '15m' }),
-      refreshToken: this.jwtService.sign(
-        { sessionId },
-        { expiresIn: '7d' },
-      ),
+      refreshToken: this.jwtService.sign({ sessionId }, { expiresIn: '7d' }),
     };
   }
-
 
   async refresh(refreshToken: string): Promise<string> {
     let payload: { sessionId: string };
@@ -109,5 +97,4 @@ export class AuthSessionServiceImpl implements AuthSessionService {
 
     await this.redis.del(`session:${sessionId}`);
   }
-
 }

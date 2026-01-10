@@ -1,10 +1,10 @@
 import { Global, Module } from '@nestjs/common';
 import Redis from 'ioredis';
 
+import { REDIS_CLIENT } from '@auth/application/tokens/redis.token';
 import { EnvModule } from '@auth/config/env/env.module';
 
 import { EnvService } from '@/config/env/env.service';
-import { REDIS_CLIENT } from '@auth/application/tokens/redis.token';
 
 /**
  * Módulo global de Redis
@@ -27,5 +27,4 @@ import { REDIS_CLIENT } from '@auth/application/tokens/redis.token';
   ],
   exports: [REDIS_CLIENT],
 })
-export class RedisModule { }
-
+export class RedisModule {}

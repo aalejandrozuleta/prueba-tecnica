@@ -1,4 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
+
 import { AuthUser } from '../types/auth-user.type';
 
 /**

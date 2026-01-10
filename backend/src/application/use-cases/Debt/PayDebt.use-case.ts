@@ -1,8 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
+
 import { DEBT_REPOSITORY } from '@auth/application/tokens/debt-repository.token';
-import { DebtRepository } from '@auth/domain/repositories/Debt.repository';
-import { ExceptionFactory } from '@auth/domain/exceptions/ExceptionFactory';
 import { DEBT_CACHE } from '@auth/application/tokens/debtCache.token';
+import { ExceptionFactory } from '@auth/domain/exceptions/ExceptionFactory';
+import { DebtRepository } from '@auth/domain/repositories/Debt.repository';
 import { DebtCacheService } from '@auth/infrastructure/cache/debt-cache.service';
 
 /**
@@ -17,9 +18,9 @@ export class PayDebtUseCase {
     private readonly debtCache: DebtCacheService,
   ) {}
 
-  async execute(id: string, userId: string): Promise<{ success: boolean, id: string }> {
+  async execute(id: string, userId: string): Promise<{ success: boolean; id: string }> {
     const debt = await this.debtRepository.findById(id);
-    
+
     if (!debt) {
       throw ExceptionFactory.debtNotFound(id);
     }
@@ -27,6 +28,5 @@ export class PayDebtUseCase {
     await this.debtRepository.pay(id);
     await this.debtCache.invalidateByPattern(`debts:${userId}:page:*`);
     return { success: true, id };
-    
   }
 }

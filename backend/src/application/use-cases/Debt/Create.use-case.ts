@@ -2,11 +2,11 @@ import { Inject, Injectable } from '@nestjs/common';
 
 import { CreateDebtDto } from '@auth/application/dto/CreateDebt.dto';
 import { DEBT_REPOSITORY } from '@auth/application/tokens/debt-repository.token';
+import { DEBT_CACHE } from '@auth/application/tokens/debtCache.token';
 import { Debt } from '@auth/domain/entities/Debt.entity';
 import { ExceptionFactory } from '@auth/domain/exceptions/ExceptionFactory';
 import { DebtRepository } from '@auth/domain/repositories/Debt.repository';
 import { Money } from '@auth/domain/value-objects/Money.vo';
-import { DEBT_CACHE } from '@auth/application/tokens/debtCache.token';
 import { DebtCacheService } from '@auth/infrastructure/cache/debt-cache.service';
 
 /**
