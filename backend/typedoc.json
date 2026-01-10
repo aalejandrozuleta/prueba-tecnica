@@ -1,7 +1,7 @@
 {
   "entryPoints": ["src"],
+  "entryPointStrategy": "expand",
   "out": "docs/code",
-  "plugin": ["typedoc-plugin-markdown"],
   "readme": "none",
   "excludePrivate": true,
   "excludeProtected": true,
