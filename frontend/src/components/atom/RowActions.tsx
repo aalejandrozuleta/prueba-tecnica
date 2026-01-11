@@ -13,6 +13,7 @@ export interface RowActionsProps {
   onDelete: () => void;
   onPay: () => void;
   disabledPay?: boolean;
+  disabledEdit?: boolean;
 }
 
 interface RowActionItem {
@@ -29,6 +30,7 @@ export function RowActions({
   onDelete,
   onPay,
   disabledPay,
+  disabledEdit,
 }: RowActionsProps) {
   const { language } = useLanguage();
   const texts = getDebtsTexts(language);
@@ -67,8 +69,8 @@ export function RowActions({
   };
 
   /**
-   * Acciones definidas de forma declarativa,
-   * con labels provenientes de i18n.
+   * Acciones definidas de forma declarativa.
+   * Las acciones deshabilitadas no son clickeables.
    */
   const actions: RowActionItem[] = [
     {
@@ -78,6 +80,7 @@ export function RowActions({
     {
       label: texts.actions.edit,
       action: onEdit,
+      disabled: disabledEdit,
     },
     {
       label: texts.actions.pay,
@@ -96,14 +99,13 @@ export function RowActions({
     <div ref={ref} className="relative">
       <button
         type="button"
-        onClick={() => setOpen((v) => !v)}
+        onClick={() => setOpen(v => !v)}
         className="
           rounded-md p-1.5
           text-neutral-400
           hover:text-neutral-700 hover:bg-black/5
           dark:hover:bg-white/10 dark:hover:text-white
           transition
-          cursor-pointer
         "
         aria-label="Acciones"
       >
@@ -114,8 +116,7 @@ export function RowActions({
         <div
           className="
             absolute right-0 z-50 mt-1
-            w-36
-            rounded-lg
+            w-36 rounded-lg
             bg-white shadow-lg ring-1 ring-black/5
             dark:bg-neutral-900 dark:ring-white/10
           "
@@ -128,9 +129,7 @@ export function RowActions({
 
               <MenuItem
                 label={item.label}
-                onClick={() =>
-                  runAction(item.action)
-                }
+                onClick={() => runAction(item.action)}
                 disabled={item.disabled}
                 danger={item.danger}
               />
@@ -161,8 +160,7 @@ function MenuItem({
       disabled={disabled}
       onClick={onClick}
       className={`
-        w-full px-3 py-1.5 text-left text-xs
-        transition
+        w-full px-3 py-1.5 text-left text-xs transition
         ${
           danger
             ? 'text-red-600 hover:bg-red-50 dark:hover:bg-red-500/10'

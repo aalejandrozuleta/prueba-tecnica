@@ -97,6 +97,8 @@ export const translations = {
       description: 'Descripción',
       creditorId: 'ID del acreedor',
       positiveAmount: 'El monto debe ser un número positivo',
+      editTitle: 'Editar deuda',
+      update: 'Actualizar',
     },
 
     statistics: {
@@ -194,6 +196,8 @@ export const translations = {
       description: 'Description',
       creditorId: 'Creditor ID',
       positiveAmount: 'Amount must be a positive number',
+      editTitle: 'Edit debt',
+      update: 'Update',
     },
 
     statistics: {

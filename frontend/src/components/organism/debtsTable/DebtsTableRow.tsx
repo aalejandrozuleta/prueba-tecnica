@@ -40,6 +40,7 @@ export function DebtsTableRow({
           onDelete={() => onDelete(debt.id)}
           onPay={() => onPay(debt.id)}
           disabledPay={debt.status === 'PAID'}
+          disabledEdit={debt.status === 'PAID'}
         />
       </Cell>
     </tr>

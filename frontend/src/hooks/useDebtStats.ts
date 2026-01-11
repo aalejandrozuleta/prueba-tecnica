@@ -29,8 +29,6 @@ export function useDebtStats() {
     const fetchStats = async () => {
       try {
         const response = await getDebtStats();
-        console.log(response);
-        
         setData(response
         );
       } catch {

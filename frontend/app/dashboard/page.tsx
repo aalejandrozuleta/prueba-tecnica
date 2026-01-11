@@ -11,11 +11,15 @@ import {
   deleteDebt,
   payDebt,
   createDebt,
+  updateDebt,
 } from '@/services/debts.service';
-import { useRouter } from 'next/navigation';
 import { CreateDebtPayload } from '@/types/createDebtPayload';
+import { UpdateDebtPayload } from '@/types/UpdateDebtPayload';
 import CsvIcon from '@/components/atom/CsvIcon';
 
+/**
+ * Página principal del dashboard de deudas.
+ */
 export default function DashboardPage() {
   const {
     data,
@@ -28,10 +32,24 @@ export default function DashboardPage() {
   } = useDebts(1);
 
   const { error, success } = useToast();
-  const router = useRouter();
+
+  /* -------------------------------------------------------------------------- */
+  /*                                   State                                    */
+  /* -------------------------------------------------------------------------- */
 
   const [openCreate, setOpenCreate] =
     useState(false);
+
+  /**
+   * Deuda seleccionada para edición.
+   * Si existe, el modal de edición está abierto.
+   */
+  const [selectedDebt, setSelectedDebt] =
+    useState<UpdateDebtPayload | null>(null);
+
+  /* -------------------------------------------------------------------------- */
+  /*                                   Actions                                  */
+  /* -------------------------------------------------------------------------- */
 
   /**
    * Elimina una deuda.
@@ -58,10 +76,22 @@ export default function DashboardPage() {
   };
 
   /**
-   * Navega a la edición de la deuda.
+   * Abre el modal de edición.
+   * No permite editar deudas pagadas.
    */
-  const handleEdit = (id: string) => {
-    router.push(`/dashboard/debts/${id}/edit`);
+  const handleEdit = (debt: any) => {
+    if (debt.status === 'PAID') {
+      error('No se puede editar una deuda ya pagada');
+      return;
+    }
+
+    setSelectedDebt({
+      id: debt,
+      amount: debt.amount,
+      description: debt.description,
+      status: debt.status,
+    });
+
   };
 
   /**
@@ -87,16 +117,49 @@ export default function DashboardPage() {
     }
   };
 
+  /**
+   * Submit del modal de edición.
+   */
+  const handleSubmitEdit = async (
+    data: UpdateDebtPayload,
+  ) => {
+    try {
+      await updateDebt(data);
+      success('Deuda actualizada correctamente');
+      
+      setSelectedDebt(null); // 👈 cierra el modal
+      refetch();
+    } catch (err: any) {
+      error(err.error.message);
+    }
+  };
+
+  /* -------------------------------------------------------------------------- */
+  /*                                   Render                                   */
+  /* -------------------------------------------------------------------------- */
+
   return (
     <>
       <ConfigModal />
 
-      {/* Modal de creación */}
+      {/* Modal crear */}
       <CreateDebtModal
         isOpen={openCreate}
+        mode="create"
         onClose={() => setOpenCreate(false)}
         onSubmit={handleSubmitCreate}
       />
+
+      {/* Modal editar (derivado de selectedDebt) */}
+      {selectedDebt && (
+        <CreateDebtModal
+          isOpen={true}
+          mode="edit"
+          initialData={selectedDebt}
+          onClose={() => setSelectedDebt(null)}
+          onSubmit={handleSubmitEdit}
+        />
+      )}
 
       <div className="space-y-6">
         <h1 className="text-xl font-semibold">
@@ -107,7 +170,7 @@ export default function DashboardPage() {
           <Button onClick={handleCreate}>
             Crear nueva
           </Button>
-          <CsvIcon/>
+          <CsvIcon />
         </div>
 
         <DebtsTable

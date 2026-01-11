@@ -3,6 +3,7 @@ import { httpClient } from './http.client';
 import { DebtDto } from '@/types/debt.dto';
 import { CreateDebtPayload } from '@/types/createDebtPayload';
 import { DebtStats } from '@/hooks/useDebtStats';
+import { UpdateDebtPayload } from '@/types/UpdateDebtPayload';
 
 /**
  * Obtiene deudas paginadas desde el backend.
@@ -50,8 +51,8 @@ export async function createDebt(
   );
 }
 
-export async function updateDebt(id: string, payload: Omit<DebtDto, 'id'>) {
-  return httpClient.put<DebtDto>(`/debt/${id}`, payload);
+export async function updateDebt(payload:UpdateDebtPayload) {
+  return httpClient.put<DebtDto>(`/debt`, payload);
 }
 
 /**
