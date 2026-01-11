@@ -55,6 +55,33 @@ export const translations = {
       registerLink: '¿No tienes cuenta? Regístrate',
     },
 
+    config: {
+      title: 'Configuración inicial',
+      subtitle: 'Personaliza tu experiencia',
+      language: 'Idioma',
+      theme: 'Tema',
+      light: 'Claro',
+      dark: 'Oscuro',
+      save: 'Guardar configuración',
+    },
+    debts: {
+      title: 'Deudas',
+      amount: 'Monto',
+      status: 'Estado',
+      description: 'Descripción',
+      createdAt: 'Creada',
+      paid: 'Pagada',
+      pending: 'Pendiente',
+      empty: 'Sin descripción',
+
+      actions: {
+        view: 'Ver',
+        edit: 'Editar',
+        pay: 'Pagar',
+        delete: 'Eliminar',
+      },
+    },
+
   },
 
   en: {
@@ -100,6 +127,33 @@ export const translations = {
       registerLink: 'Don’t have an account? Sign up',
     },
 
+    config: {
+      title: 'Initial setup',
+      subtitle: 'Customize your experience',
+      language: 'Language',
+      theme: 'Theme',
+      light: 'Light',
+      dark: 'Dark',
+      save: 'Save settings',
+    },
+    debts: {
+      title: 'Debts',
+      amount: 'Amount',
+      status: 'Status',
+      description: 'Description',
+      createdAt: 'Created',
+      paid: 'Paid',
+      pending: 'Pending',
+      empty: 'No description',
+
+      actions: {
+        view: 'View',
+        edit: 'Edit',
+        pay: 'Pay',
+        delete: 'Delete',
+      },
+    },
+
   },
 } as const;
 
@@ -126,4 +180,22 @@ export function getErrorTexts(lang: Language) {
  */
 export function getAuthTexts(lang: Language) {
   return translations[lang].auth;
+}
+
+
+/**
+ * Textos de configuración.
+ */
+
+export function getConfigTexts(lang: Language) {
+  return translations[lang].config;
+}
+
+
+/**
+ *  Textos de deudas.
+ */
+
+export function getDebtsTexts(lang: Language) {
+  return translations[lang].debts;
 }

@@ -2,91 +2,67 @@
 
 import {
   createContext,
-  ReactNode,
   useContext,
   useEffect,
   useState,
 } from 'react';
 
-/**
- * Temas soportados por la aplicación.
- */
-export type Theme = 'light' | 'dark';
+type Theme = 'light' | 'dark';
 
-/**
- * Contrato del contexto de tema.
- */
 interface ThemeContextValue {
   theme: Theme;
-  toggleTheme: () => void;
-  setTheme: (theme: Theme) => void;
+  setLight: () => void;
+  setDark: () => void;
 }
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 
-/**
- * Proveedor global del tema de la aplicación.
- *
- * - Controla dark / light mode
- * - Aplica la clase `dark` al HTML
- * - Persiste la preferencia del usuario
- */
-export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>('light');
+export function ThemeProvider({ children }: { children: React.ReactNode }) {
+  const [theme, setTheme] = useState<Theme>('dark');
 
   /**
-   * Aplica el tema al elemento HTML.
+   * Aplica el tema al elemento <html>.
    */
   const applyTheme = (value: Theme) => {
-    const root = document.documentElement;
+    const html = document.documentElement;
 
     if (value === 'dark') {
-      root.classList.add('dark');
+      html.classList.add('dark');
     } else {
-      root.classList.remove('dark');
+      html.classList.remove('dark');
     }
-  };
 
-  /**
-   * Cambia el tema y lo persiste.
-   */
-  const setTheme = (value: Theme) => {
-    setThemeState(value);
     localStorage.setItem('theme', value);
-    applyTheme(value);
-  };
-
-  /**
-   * Alterna entre light y dark.
-   */
-  const toggleTheme = () => {
-    setTheme(theme === 'light' ? 'dark' : 'light');
+    setTheme(value);
   };
 
   /**
    * Inicializa el tema desde localStorage.
    */
   useEffect(() => {
-    const savedTheme = localStorage.getItem('theme') as Theme | null;
+    const stored = localStorage.getItem('theme') as Theme | null;
 
-    if (savedTheme) {
-      setTheme(savedTheme);
+    if (stored === 'light' || stored === 'dark') {
+      applyTheme(stored);
     } else {
-      applyTheme('light');
+      applyTheme('dark'); // default
     }
   }, []);
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme, setTheme }}>
+    <ThemeContext.Provider
+      value={{
+        theme,
+        setLight: () => applyTheme('light'),
+        setDark: () => applyTheme('dark'),
+      }}
+    >
       {children}
     </ThemeContext.Provider>
   );
 }
 
-/**
- * Hook para consumir el ThemeContext.
- */
-export function useThemeContext() {
+export function useTheme() {
   const context = useContext(ThemeContext);
 
   if (!context) {

@@ -15,6 +15,8 @@ if (!userId) {
   process.exit(1);
 }
 
+// 4e414a6b-3efe-44a4-8b37-e79fb16ad363
+
 const DEBT_COUNT = Number(countArg) > 0 ? Number(countArg) : 10;
 
 if (!process.env.DATABASE_URL) {

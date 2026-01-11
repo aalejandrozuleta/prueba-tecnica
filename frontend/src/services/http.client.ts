@@ -49,8 +49,6 @@ class HttpClient {
    * Inicializa interceptores globales.
    */
   private initializeInterceptors() {
-    console.log('base url', process.env.NEXT_PUBLIC_API_URL);
-    
     /**
      * Interceptor de response:
      * - Normaliza errores
@@ -74,17 +72,13 @@ class HttpClient {
   /*                                  Methods                                   */
   /* -------------------------------------------------------------------------- */
 
-  get<T>(url: string, config?: AxiosRequestConfig) {
-    return this.client
-      .get<SuccessResponse<T>>(url, config)
-      .then((res) => res.data);
-  }
+  get<T>(url: string, config?: AxiosRequestConfig): Promise<T> {
+  return this.client.get<T>(url, config).then(res => res.data);
+}
 
-  post<T>(url: string, data?: unknown, config?: AxiosRequestConfig) {
-    return this.client
-      .post<SuccessResponse<T>>(url, data, config)
-      .then((res) => res.data);
-  }
+post<T>(url: string, data?: unknown, config?: AxiosRequestConfig): Promise<T> {
+  return this.client.post<T>(url, data, config).then(res => res.data);
+}
 
   put<T>(url: string, data?: unknown, config?: AxiosRequestConfig) {
     return this.client
