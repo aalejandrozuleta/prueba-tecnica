@@ -15,7 +15,7 @@
     "id": "ID must be a UUID v4"
   },
 
-  "active_limit_exceeded": "You cannot have more than 3 active debts",
+  "active_limit_exceeded": "You cannot have more than 10 active debts",
   "debtor_not_found": "Debtor not found",
   "creditor_not_found": "Creditor not found",
   "debt_not_found": "Debt not found",

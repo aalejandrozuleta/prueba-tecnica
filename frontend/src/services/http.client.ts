@@ -3,6 +3,7 @@ import axios, {
   AxiosInstance,
   AxiosRequestConfig,
 } from 'axios';
+import { languageStore } from '@/stores/language.store';
 
 /**
  * Respuesta estándar de éxito proveniente del backend.
@@ -26,21 +27,23 @@ export interface ErrorResponse {
  *
  * - Soporta cookies httpOnly
  * - Respeta contratos SuccessResponse / ErrorResponse
- * - NO maneja UX ni i18n
+ * - Adjunta Accept-Language automáticamente
+ * - NO maneja UX ni textos
  */
 class HttpClient {
   private client: AxiosInstance;
 
   constructor() {
     this.client = axios.create({
-      baseURL: process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:8000',
+      baseURL:
+        process.env.NEXT_PUBLIC_API_URL ??
+        'http://localhost:8000',
       timeout: 10000,
       withCredentials: true,
       headers: {
         'Content-Type': 'application/json',
       },
     });
-
 
     this.initializeInterceptors();
   }
@@ -49,10 +52,20 @@ class HttpClient {
    * Inicializa interceptores globales.
    */
   private initializeInterceptors() {
-    /**
-     * Interceptor de response:
-     * - Normaliza errores
-     */
+    /* ---------------------------- Request interceptor ---------------------------- */
+    this.client.interceptors.request.use(
+      (config) => {
+        config.headers = config.headers ?? {};
+
+        config.headers['Accept-Language'] =
+          languageStore.get();
+
+        return config;
+      },
+      (error) => Promise.reject(error),
+    );
+
+    /* ---------------------------- Response interceptor ---------------------------- */
     this.client.interceptors.response.use(
       (response) => response,
       (error: AxiosError<ErrorResponse>) => {
@@ -72,21 +85,39 @@ class HttpClient {
   /*                                  Methods                                   */
   /* -------------------------------------------------------------------------- */
 
-  get<T>(url: string, config?: AxiosRequestConfig): Promise<T> {
-  return this.client.get<T>(url, config).then(res => res.data);
-}
+  get<T>(
+    url: string,
+    config?: AxiosRequestConfig,
+  ): Promise<T> {
+    return this.client
+      .get<T>(url, config)
+      .then((res) => res.data);
+  }
 
-post<T>(url: string, data?: unknown, config?: AxiosRequestConfig): Promise<T> {
-  return this.client.post<T>(url, data, config).then(res => res.data);
-}
+  post<T>(
+    url: string,
+    data?: unknown,
+    config?: AxiosRequestConfig,
+  ): Promise<T> {
+    return this.client
+      .post<T>(url, data, config)
+      .then((res) => res.data);
+  }
 
-  put<T>(url: string, data?: unknown, config?: AxiosRequestConfig) {
+  put<T>(
+    url: string,
+    data?: unknown,
+    config?: AxiosRequestConfig,
+  ): Promise<SuccessResponse<T>> {
     return this.client
       .put<SuccessResponse<T>>(url, data, config)
       .then((res) => res.data);
   }
 
-  delete<T>(url: string, config?: AxiosRequestConfig) {
+  delete<T>(
+    url: string,
+    config?: AxiosRequestConfig,
+  ): Promise<SuccessResponse<T>> {
     return this.client
       .delete<SuccessResponse<T>>(url, config)
       .then((res) => res.data);

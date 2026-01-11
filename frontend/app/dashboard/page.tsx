@@ -16,6 +16,8 @@ import {
 import { CreateDebtPayload } from '@/types/createDebtPayload';
 import { UpdateDebtPayload } from '@/types/UpdateDebtPayload';
 import CsvIcon from '@/components/atom/CsvIcon';
+import { getDebtModal } from '@/libs/i18n';
+import { useLanguage } from '@/hooks/useLanguage';
 
 /**
  * Página principal del dashboard de deudas.
@@ -32,6 +34,8 @@ export default function DashboardPage() {
   } = useDebts(1);
 
   const { error, success } = useToast();
+  const { language } = useLanguage();
+  const texts = getDebtModal(language);
 
   /* -------------------------------------------------------------------------- */
   /*                                   State                                    */
@@ -80,11 +84,6 @@ export default function DashboardPage() {
    * No permite editar deudas pagadas.
    */
   const handleEdit = (debt: any) => {
-    if (debt.status === 'PAID') {
-      error('No se puede editar una deuda ya pagada');
-      return;
-    }
-
     setSelectedDebt({
       id: debt,
       amount: debt.amount,
@@ -109,7 +108,7 @@ export default function DashboardPage() {
   ) => {
     try {
       await createDebt(data);
-      success('Deuda creada correctamente');
+      success(texts.createSuccess);
       setOpenCreate(false);
       refetch();
     } catch (err: any) {
@@ -125,7 +124,7 @@ export default function DashboardPage() {
   ) => {
     try {
       await updateDebt(data);
-      success('Deuda actualizada correctamente');
+      success(texts.updateSuccess);
       
       setSelectedDebt(null); // 👈 cierra el modal
       refetch();
@@ -163,12 +162,12 @@ export default function DashboardPage() {
 
       <div className="space-y-6">
         <h1 className="text-xl font-semibold">
-          Deudas
+          {texts.title}
         </h1>
 
         <div className="flex justify-end w-full gap-5">
           <Button onClick={handleCreate}>
-            Crear nueva
+            {texts.createDebt}
           </Button>
           <CsvIcon />
         </div>

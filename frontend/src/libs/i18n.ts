@@ -1,3 +1,5 @@
+import { title } from "process";
+
 /**
  * Idiomas soportados por el frontend.
  */
@@ -99,6 +101,10 @@ export const translations = {
       positiveAmount: 'El monto debe ser un número positivo',
       editTitle: 'Editar deuda',
       update: 'Actualizar',
+      createSuccess: 'Deuda creada correctamente',
+      updateSuccess: 'Deuda actualizada correctamente',
+      createDebt: 'Crear nueva deuda',
+      title : 'Deudas',
     },
 
     statistics: {
@@ -108,6 +114,7 @@ export const translations = {
       paidDebts: 'Deudas pagadas',
       pendingDebts: 'Deudas pendientes',
       totalAmount: 'Monto total',
+      title: 'Estadísticas',
     },
 
   },
@@ -198,6 +205,10 @@ export const translations = {
       positiveAmount: 'Amount must be a positive number',
       editTitle: 'Edit debt',
       update: 'Update',
+      createSuccess: 'Debt created successfully',
+      updateSuccess: 'Debt updated successfully',
+      createDebt: 'Create new debt',
+      title : 'Debts',
     },
 
     statistics: {
