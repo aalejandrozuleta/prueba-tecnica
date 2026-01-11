@@ -99,6 +99,15 @@ export const translations = {
       positiveAmount: 'El monto debe ser un número positivo',
     },
 
+    statistics: {
+      statistics: 'Estadísticas',
+      loading: 'Cargando...',
+      totalDebts: 'Total de deudas',
+      paidDebts: 'Deudas pagadas',
+      pendingDebts: 'Deudas pendientes',
+      totalAmount: 'Monto total',
+    },
+
   },
 
   en: {
@@ -187,6 +196,15 @@ export const translations = {
       positiveAmount: 'Amount must be a positive number',
     },
 
+    statistics: {
+      statistics: 'Statistics',
+      loading: 'Loading...',
+      totalDebts: 'Total debts',
+      paidDebts: 'Paid debts',
+      pendingDebts: 'Pending debts',
+      totalAmount: 'Total amount',
+    },
+
   },
 } as const;
 
@@ -240,4 +258,13 @@ export function getDebtsTexts(lang: Language) {
 
 export function getDebtModal(lang: Language) {
   return translations[lang].debtModal;
+}
+
+
+/**
+ *  Textos de estadísticas.
+ */
+
+export function getDebtStatsTexts(lang: Language) {
+  return translations[lang].statistics;
 }

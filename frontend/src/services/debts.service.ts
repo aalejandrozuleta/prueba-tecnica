@@ -2,6 +2,7 @@ import { PaginatedResponse } from '@/types/paginated-response';
 import { httpClient } from './http.client';
 import { DebtDto } from '@/types/debt.dto';
 import { CreateDebtPayload } from '@/types/createDebtPayload';
+import { DebtStats } from '@/hooks/useDebtStats';
 
 /**
  * Obtiene deudas paginadas desde el backend.
@@ -60,4 +61,9 @@ export async function exportDebts(): Promise<Blob> {
   return httpClient.get<Blob>('/debt/export', {
     responseType: 'blob',
   });
+}
+
+export async function getDebtStats(): Promise<DebtStats> {
+  const  data  = await httpClient.get<DebtStats>('/debt/count');
+  return data;
 }

@@ -4,6 +4,8 @@ import { useTheme } from '@/context/ThemeContext';
 import { useLanguage } from '@/hooks/useLanguage';
 import { getConfigTexts } from '@/libs/i18n';
 import { Button } from '@/components/atom/Button';
+import { useDebtStats } from '@/hooks/useDebtStats';
+import { getDebtStatsTexts } from '@/libs/i18n';
 
 /**
  * Navbar principal del dashboard.
@@ -15,8 +17,10 @@ import { Button } from '@/components/atom/Button';
 export function DashboardNavbar() {
   const { theme, setDark, setLight } = useTheme();
   const { language, setSpanish, setEnglish } = useLanguage();
+  const { data, loading } = useDebtStats();
 
   const texts = getConfigTexts(language);
+  const statsTexts = getDebtStatsTexts(language);
 
   return (
     <nav
@@ -30,6 +34,22 @@ export function DashboardNavbar() {
     >
       {/* Logo / Title */}
       <div className="text-sm font-semibold text-gray-800 dark:text-gray-100">Dashboard</div>
+
+      <div className="text-sm font-semibold text-gray-800 dark:text-gray-100">
+        {statsTexts.statistics}
+
+        <span className="ml-2 text-xs font-normal text-gray-500">
+          {loading && statsTexts.loading}
+
+          {!loading && data && (
+            <>
+              {statsTexts.totalDebts}: {data.data.totalDebts} · {statsTexts.paidDebts}: {data.data.totalPaidDebts} ·{' '}
+              {statsTexts.pendingDebts}: {data.data.totalPendingDebts} · {statsTexts.totalAmount}: $
+              {data.data.totalDebtAmount}
+            </>
+          )}
+        </span>
+      </div>
 
       {/* Actions */}
       <div className="flex items-center gap-4">

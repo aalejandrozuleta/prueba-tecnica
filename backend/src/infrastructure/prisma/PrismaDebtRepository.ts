@@ -75,7 +75,10 @@ export class PrismaDebtRepository implements DebtRepository {
 
         // Valor total de la deuda
         this.prisma.debt.aggregate({
-          where: { debtorId },
+          where: {
+            debtorId,
+            status: 'PENDING',
+          },
           _sum: {
             amount: true,
           },

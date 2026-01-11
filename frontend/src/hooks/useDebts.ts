@@ -15,7 +15,7 @@ import { DebtViewModel } from '@/types/debt.view-model';
  */
 export function useDebts(
   initialPage = 1,
-  initialLimit = 10,
+  initialLimit = 5,
 ) {
   const [data, setData] = useState<DebtViewModel[]>([]);
   const [page, setPage] = useState(initialPage);

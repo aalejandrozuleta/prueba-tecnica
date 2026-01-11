@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { Modal } from '@/components/shared/Modal';
 import { Button } from '@/components/atom/Button';
 import { useTheme } from '@/context/ThemeContext';
-import { useLanguage } from '@/hooks/useLanguage';
 import { useLanguage as useLangHook } from '@/hooks/useLanguage';
 import { getConfigTexts } from '@/libs/i18n';
 
