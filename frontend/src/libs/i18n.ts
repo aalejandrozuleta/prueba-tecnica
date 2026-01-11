@@ -44,6 +44,13 @@ export const translations = {
 
       /** Fallback */
       unknown: 'Ocurrió un error inesperado',
+
+      debtPositiveAmount: 'El monto debe ser un número positivo',
+      debtRequiredAmount: 'El monto es obligatorio',
+      debtMaxDecimals: 'Máximo 2 decimales',
+      debtInvalidCreditorId: 'ID de acreedor inválido',
+      debtRequiredCreditorId: 'El ID de acreedor es obligatorio',
+
     },
     auth: {
       title: 'Iniciar sesión',
@@ -82,6 +89,16 @@ export const translations = {
       },
     },
 
+    debtModal: {
+      createTitle: 'Crear nueva deuda',
+      submit: 'Crear deuda',
+      loading: 'Creando...',
+      amount: 'Monto',
+      description: 'Descripción',
+      creditorId: 'ID del acreedor',
+      positiveAmount: 'El monto debe ser un número positivo',
+    },
+
   },
 
   en: {
@@ -112,6 +129,12 @@ export const translations = {
       /** Name */
       nameMin: 'Name must be at least 2 characters',
       nameMax: 'Name must not exceed 50 characters',
+
+      debtPositiveAmount: 'Amount must be a positive number',
+      debtRequiredAmount: 'Amount is required',
+      debtMaxDecimals: 'Maximum 2 decimals allowed',
+      debtInvalidCreditorId: 'Invalid creditor ID',
+      debtRequiredCreditorId: 'Creditor ID is required',
 
       /** Fallback */
       unknown: 'An unexpected error occurred',
@@ -152,6 +175,16 @@ export const translations = {
         pay: 'Pay',
         delete: 'Delete',
       },
+    },
+
+    debtModal: {
+      createTitle: 'Create new debt',
+      submit: 'Create debt',
+      loading: 'Creating...',
+      amount: 'Amount',
+      description: 'Description',
+      creditorId: 'Creditor ID',
+      positiveAmount: 'Amount must be a positive number',
     },
 
   },
@@ -198,4 +231,13 @@ export function getConfigTexts(lang: Language) {
 
 export function getDebtsTexts(lang: Language) {
   return translations[lang].debts;
+}
+
+
+/**
+ *  Textos de deuda.
+ */
+
+export function getDebtModal(lang: Language) {
+  return translations[lang].debtModal;
 }

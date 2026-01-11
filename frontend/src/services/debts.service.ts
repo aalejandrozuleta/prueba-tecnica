@@ -1,6 +1,7 @@
 import { PaginatedResponse } from '@/types/paginated-response';
 import { httpClient } from './http.client';
 import { DebtDto } from '@/types/debt.dto';
+import { CreateDebtPayload } from '@/types/createDebtPayload';
 
 /**
  * Obtiene deudas paginadas desde el backend.
@@ -33,8 +34,19 @@ export async function payDebt(id: string) {
 }
 
 
-export async function createDebt(payload: Omit<DebtDto, 'id'>) {
-  return httpClient.post<DebtDto>('/debt', payload);
+/**
+ * Crea una nueva deuda.
+ *
+ * - debtorId se resuelve en backend
+ * - status SIEMPRE es PENDING
+ */
+export async function createDebt(
+  payload: CreateDebtPayload,
+): Promise<DebtDto> {
+  return httpClient.post<DebtDto>(
+    '/debt/create',
+    payload,
+  );
 }
 
 export async function updateDebt(id: string, payload: Omit<DebtDto, 'id'>) {

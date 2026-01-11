@@ -18,7 +18,7 @@ export default function CsvIcon() {
   };
 
   return (
-    <figure className="flex items-end justify-end gap-4 px-6 py-5 text-sm">
+    <figure className="gap-4 text-sm">
       <button
         type="button"
         onClick={handleExport}

@@ -1,11 +1,20 @@
 'use client';
 
+import { useState } from 'react';
+import { Button } from '@/components/atom/Button';
 import { ConfigModal } from '@/components/organism/ConfigModal';
 import { DebtsTable } from '@/components/organism/debtsTable';
+import { CreateDebtModal } from '@/components/organism/CreateDebtModal';
 import { useDebts } from '@/hooks/useDebts';
 import { useToast } from '@/hooks/useToast';
-import { deleteDebt, payDebt } from '@/services/debts.service';
+import {
+  deleteDebt,
+  payDebt,
+  createDebt,
+} from '@/services/debts.service';
 import { useRouter } from 'next/navigation';
+import { CreateDebtPayload } from '@/types/createDebtPayload';
+import CsvIcon from '@/components/atom/CsvIcon';
 
 export default function DashboardPage() {
   const {
@@ -18,8 +27,11 @@ export default function DashboardPage() {
     refetch,
   } = useDebts(1);
 
-  const { error } = useToast();
+  const { error, success } = useToast();
   const router = useRouter();
+
+  const [openCreate, setOpenCreate] =
+    useState(false);
 
   /**
    * Elimina una deuda.
@@ -28,7 +40,7 @@ export default function DashboardPage() {
     try {
       await deleteDebt(id);
       refetch();
-    } catch (err:any) {
+    } catch (err: any) {
       error(err.error.message);
     }
   };
@@ -40,7 +52,7 @@ export default function DashboardPage() {
     try {
       await payDebt(id);
       refetch();
-    } catch (err:any) {
+    } catch (err: any) {
       error(err.error.message);
     }
   };
@@ -52,12 +64,51 @@ export default function DashboardPage() {
     router.push(`/dashboard/debts/${id}/edit`);
   };
 
+  /**
+   * Abre el modal de creación.
+   */
+  const handleCreate = () => {
+    setOpenCreate(true);
+  };
+
+  /**
+   * Submit del modal de creación.
+   */
+  const handleSubmitCreate = async (
+    data: CreateDebtPayload,
+  ) => {
+    try {
+      await createDebt(data);
+      success('Deuda creada correctamente');
+      setOpenCreate(false);
+      refetch();
+    } catch (err: any) {
+      error(err.error.message);
+    }
+  };
+
   return (
     <>
       <ConfigModal />
 
+      {/* Modal de creación */}
+      <CreateDebtModal
+        isOpen={openCreate}
+        onClose={() => setOpenCreate(false)}
+        onSubmit={handleSubmitCreate}
+      />
+
       <div className="space-y-6">
-        <h1 className="text-xl font-semibold">Deudas</h1>
+        <h1 className="text-xl font-semibold">
+          Deudas
+        </h1>
+
+        <div className="flex justify-end w-full gap-5">
+          <Button onClick={handleCreate}>
+            Crear nueva
+          </Button>
+          <CsvIcon/>
+        </div>
 
         <DebtsTable
           debts={data}

@@ -6,7 +6,6 @@ import { DebtViewModal } from '../DebtViewModal';
 import { DebtViewModel } from '@/types/debt.view-model';
 import { DebtsTableHeader } from './DebtsTableHeader';
 import { DebtsTableBody } from './DebtsTableBody';
-import CsvIcon from '@/components/atom/CsvIcon';
 
 export interface DebtsTableProps {
   debts: DebtViewModel[];
@@ -30,7 +29,6 @@ export function DebtsTable(props: DebtsTableProps) {
   return (
     <>
       <div className="relative rounded-3xl bg-white/70 backdrop-blur-xl dark:bg-neutral-900/70">
-        <CsvIcon/>
 
         <div className="relative min-h-105 overflow-x-auto">
           <table className="min-w-full text-sm">
