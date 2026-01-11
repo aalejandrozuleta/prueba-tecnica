@@ -6,10 +6,11 @@ import { DebtRepository } from '@auth/domain/repositories/Debt.repository';
 
 import { PrismaService } from './config/prisma.service';
 import { mapToDomain } from './mappers/debt.mapper';
+import { DebtorDebtStats } from '@auth/utils/DebtorDebtStats.interface';
 
 @Injectable()
 export class PrismaDebtRepository implements DebtRepository {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
   /**
    * Obtiene todas las deudas de un deudor
@@ -37,8 +38,58 @@ export class PrismaDebtRepository implements DebtRepository {
   }
 
   /**
-   * Cuenta las deudas activas de un deudor
-   */
+ * Obtiene estadísticas agregadas de las deudas de un deudor.
+ *
+ * Retorna:
+ * - Total de deudas
+ * - Total de deudas pagadas
+ * - Total de deudas pendientes
+ * - Valor total acumulado de la deuda
+ *
+ * @param debtorId - Identificador del deudor
+ * @returns Estadísticas agregadas de deudas
+ */
+  async getDebtStatsByDebtor(debtorId: string): Promise<DebtorDebtStats> {
+    const [totalDebts, totalPaidDebts, totalPendingDebts, totalAmount] =
+      await Promise.all([
+        // Total de deudas
+        this.prisma.debt.count({
+          where: { debtorId },
+        }),
+
+        // Total de deudas pagadas
+        this.prisma.debt.count({
+          where: {
+            debtorId,
+            status: 'PAID',
+          },
+        }),
+
+        // Total de deudas pendientes
+        this.prisma.debt.count({
+          where: {
+            debtorId,
+            status: 'PENDING',
+          },
+        }),
+
+        // Valor total de la deuda
+        this.prisma.debt.aggregate({
+          where: { debtorId },
+          _sum: {
+            amount: true,
+          },
+        }),
+      ]);
+
+    return {
+      totalDebts,
+      totalPaidDebts,
+      totalPendingDebts,
+      totalDebtAmount: Number(totalAmount._sum.amount ?? 0),
+    };
+  }
+
   async countActiveByDebtor(debtorId: string): Promise<number> {
     return this.prisma.debt.count({
       where: {
@@ -47,6 +98,7 @@ export class PrismaDebtRepository implements DebtRepository {
       },
     });
   }
+
 
   /**
    * Crea una nueva deuda
@@ -64,27 +116,27 @@ export class PrismaDebtRepository implements DebtRepository {
 
     const record = exists
       ? await this.prisma.debt.update({
-          where: { id: debt.getId() },
-          data: {
-            amount: debt.getAmount(),
-            description: debt.getDescription(),
-            status: debt.getStatus(),
-            paidAt: debt.getPaidAt(),
-            updatedAt: new Date(),
-          },
-        })
+        where: { id: debt.getId() },
+        data: {
+          amount: debt.getAmount(),
+          description: debt.getDescription(),
+          status: debt.getStatus(),
+          paidAt: debt.getPaidAt(),
+          updatedAt: new Date(),
+        },
+      })
       : await this.prisma.debt.create({
-          data: {
-            id: debt.getId(),
-            amount: debt.getAmount(),
-            description: debt.getDescription(),
-            status: debt.getStatus(),
-            debtorId: debt.getDebtorId(),
-            creditorId: debt.getCreditorId(),
-            createdAt: debt.getCreatedAt(),
-            paidAt: debt.getPaidAt(),
-          },
-        });
+        data: {
+          id: debt.getId(),
+          amount: debt.getAmount(),
+          description: debt.getDescription(),
+          status: debt.getStatus(),
+          debtorId: debt.getDebtorId(),
+          creditorId: debt.getCreditorId(),
+          createdAt: debt.getCreatedAt(),
+          paidAt: debt.getPaidAt(),
+        },
+      });
 
     return mapToDomain(record);
   }
